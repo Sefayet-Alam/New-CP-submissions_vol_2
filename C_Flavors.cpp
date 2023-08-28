@@ -163,10 +163,29 @@ int main()
     //cin>>t;
 
     while(t--){
-      vector<ll>vec(5);
-      cin>>vec;
-      next_permutation(all(vec));
-      cout<<vec<<nn;
+        ll n;
+        cin>>n;
+        vector<pll>vec;
+        ll a,b;
+        for(ll i=0;i<n;i++){
+            cin>>a>>b;
+            vec.push_back({b,a});
+        }
+        sort(vec.rbegin(),vec.rend());
+        ll maxm=0;
+        ll ans1=0;
+       
+        ll ans2=0;
+        for(ll i=1;i<n;i++){
+            if(vec[i].second!=vec[0].second){
+             ans2=max(ans2,vec[i].first+vec[0].first);
+            }
+            if(vec[i].second==vec[i-1].second){
+             ans1=max(ans1,vec[i-1].first+vec[i].first/2);
+            }
+        }
+        ll ans=max(ans1,ans2);
+        cout<<ans<<nn;
     }
 
 

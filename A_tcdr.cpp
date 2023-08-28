@@ -163,10 +163,15 @@ int main()
     //cin>>t;
 
     while(t--){
-      vector<ll>vec(5);
-      cin>>vec;
-      next_permutation(all(vec));
-      cout<<vec<<nn;
+        string s;
+        cin>>s;
+        ll n=s.size();
+        string ans="";
+        for(ll i=0;i<n;i++){
+            if(s[i]=='a' || s[i]=='e' || s[i]=='o' || s[i]=='i' || s[i]=='u' ){}
+            else ans+=s[i];
+        }
+        cout<<ans<<nn;
     }
 
 

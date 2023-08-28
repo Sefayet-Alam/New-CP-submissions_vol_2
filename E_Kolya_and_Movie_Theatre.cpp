@@ -160,14 +160,30 @@ int main()
     //setIO();
      //ll tno=1;;
      t=1;
-    //cin>>t;
+    cin>>t;
 
     while(t--){
-      vector<ll>vec(5);
-      cin>>vec;
-      next_permutation(all(vec));
-      cout<<vec<<nn;
-    }
+        ll n,m,d;
+        cin>>n>>m>>d;
+        vector<ll>vec(n);
+        cin>>vec;
+
+        QP<ll>pq;
+        ll maxm=0;
+        ll sum=0;
+        for(ll i=0;i<n;i++){
+            if(vec[i]>0){
+                sum+=vec[i];
+                pq.push(vec[i]);
+                if(pq.size()>m){
+                    sum-=pq.top();
+                    pq.pop();
+                }
+            }
+            maxm=max(maxm,sum-d*(i+1));
+        }
+        cout<<maxm<<nn;
+        }
 
 
     return 0;

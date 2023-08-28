@@ -160,13 +160,17 @@ int main()
     //setIO();
      //ll tno=1;;
      t=1;
-    //cin>>t;
+    cin>>t;
 
     while(t--){
-      vector<ll>vec(5);
-      cin>>vec;
-      next_permutation(all(vec));
-      cout<<vec<<nn;
+      ll n;
+      cin>>n;
+      vector<ll>odd,ev;
+      for(ll i=1;i<=n;i++){
+        if(i%2) odd.push_back(i);
+        else ev.push_back(i);
+      } 
+      cout<<ev<<" "<<odd<<nn;
     }
 
 

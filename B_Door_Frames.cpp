@@ -155,23 +155,34 @@ struct custom_hash {
 
 int main()
 {
-    fast;
-     ll t;
-    //setIO();
-     //ll tno=1;;
-     t=1;
-    //cin>>t;
+     ll n, m;
+    cin >> n;
+    ll a, b;
+    cin >> a >> b;
+ 
+    vl arr = {a, a, a, a, b, b};
+    sort(all(arr));
+ 
+    ll res = LLONG_MAX;
+    do
+    {
+        int cc = 1;
+        int left = n;
+        for (auto x : arr)
+        {
+            if (left < x)
+            {
+                left = n;
+                cc++;
+            }
+            left -= x;
+        }
+        res = min(res, 1LL*cc);
+    } while (next_permutation(all(arr)));
+ 
+    cout << res << nn;
 
-    while(t--){
-        ll n,a,b;
-        cin>>n>>a>>b;
-        ll tot=(a*2+b)*2;
-        ll ans=0;
-        ans=(tot+n-1)/n;
-        cout<<ans<<nn;
     }
 
 
-    return 0;
-}
 

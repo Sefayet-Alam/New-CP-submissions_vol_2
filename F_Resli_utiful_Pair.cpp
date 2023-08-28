@@ -160,13 +160,12 @@ int main()
     //setIO();
      //ll tno=1;;
      t=1;
-    //cin>>t;
+    cin>>t;
 
     while(t--){
-      vector<ll>vec(5);
-      cin>>vec;
-      next_permutation(all(vec));
-      cout<<vec<<nn;
+        ll n;
+        cin>>n;
+        cout<<n+1<<" "<<2<<nn;
     }
 
 

@@ -1,0 +1,1 @@
+{"name":"Local: pit","url":"c:\\Users\\ASUS\\OneDrive\\Documents\\GitHub\\New-CP-submissions_vol_2\\pit.py","tests":[{"id":1692441313983,"input":"4\n3 1 4 2\n5","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"c:\\Users\\ASUS\\OneDrive\\Documents\\GitHub\\New-CP-submissions_vol_2\\pit.py","group":"local","local":true}

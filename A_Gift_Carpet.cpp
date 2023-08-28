@@ -160,13 +160,43 @@ int main()
     //setIO();
      //ll tno=1;;
      t=1;
-    //cin>>t;
+    cin>>t;
 
     while(t--){
-      vector<ll>vec(5);
-      cin>>vec;
-      next_permutation(all(vec));
-      cout<<vec<<nn;
+        ll n,m;
+        cin>>n>>m;
+         char grid[n][m];
+         for(ll i=0;i<n;i++){
+            for(ll j=0;j<m;j++){
+                cin>>grid[i][j];
+            }
+         }
+        
+         map<char,ll>vis;
+        for(ll i=0;i<m;i++){
+            for(ll j=0;j<n;j++){
+                // cout<<grid[j][i];
+                if(grid[j][i]=='v' && !vis['v']){
+                    vis['v']=1;
+                    break;
+                }
+                 if(vis['v'] && grid[j][i]=='i' && !vis['i']){
+                    vis['i']=1;
+                    break;
+                }
+                 if(vis['v'] && vis['i'] && grid[j][i]=='k' && !vis['k']){
+                    vis['k']=1;
+                    break;
+                }
+                 if(vis['v'] && vis['i']  && vis['k'] && grid[j][i]=='a' && !vis['a']){
+                    vis['a']=1;
+                    break;
+                }
+            }
+            // cout<<nn;
+        }
+        if(vis['v'] && vis['k'] && vis['i'] && vis['a']) cout<<"YES"<<nn;
+        else cout<<"NO"<<nn;
     }
 
 

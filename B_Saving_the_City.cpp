@@ -160,16 +160,31 @@ int main()
     //setIO();
      //ll tno=1;;
      t=1;
-    //cin>>t;
+    cin>>t;
 
     while(t--){
-      vector<ll>vec(5);
-      cin>>vec;
-      next_permutation(all(vec));
-      cout<<vec<<nn;
+      ll a,b;
+      cin>>a>>b;
+      string s;
+      cin>>s;
+      ll n=s.size();
+      ll last=-1;
+      ll ans=0;
+      for(ll i=0;i<n;i++){
+        if(s[i]=='1'){
+            if(last!=-1){
+                ans+=min((i-last-1)*b,a);
+                last=i;
+            }
+            else{
+                ans+=a;
+                last=i;
+            }
+        }
+      }
+      cout<<ans<<nn;
     }
 
 
     return 0;
 }
-

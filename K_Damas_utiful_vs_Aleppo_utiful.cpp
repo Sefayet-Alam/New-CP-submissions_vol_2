@@ -163,10 +163,7 @@ int main()
     //cin>>t;
 
     while(t--){
-      vector<ll>vec(5);
-      cin>>vec;
-      next_permutation(all(vec));
-      cout<<vec<<nn;
+      cout<<"M7ashe"<<nn;
     }
 
 

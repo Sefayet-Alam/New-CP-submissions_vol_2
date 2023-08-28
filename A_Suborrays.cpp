@@ -160,13 +160,19 @@ int main()
     //setIO();
      //ll tno=1;;
      t=1;
-    //cin>>t;
+    cin>>t;
 
     while(t--){
-      vector<ll>vec(5);
-      cin>>vec;
-      next_permutation(all(vec));
-      cout<<vec<<nn;
+      ll n;
+      cin>>n;
+      ll l=1,r=n;
+      vector<ll>ans;
+      for(ll i=0;i<n;i++){
+        if(i%2)ans.push_back(l),l++;
+        else ans.push_back(r),r--;
+       
+      }
+      cout<<ans<<nn;
     }
 
 

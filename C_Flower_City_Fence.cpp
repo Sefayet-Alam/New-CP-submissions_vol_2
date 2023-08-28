@@ -160,13 +160,33 @@ int main()
     //setIO();
      //ll tno=1;;
      t=1;
-    //cin>>t;
+    cin>>t;
 
     while(t--){
-      vector<ll>vec(5);
+      ll n;
+      cin>>n;
+      vector<ll>vec(n);
       cin>>vec;
-      next_permutation(all(vec));
-      cout<<vec<<nn;
+      map<ll,ll>lvls;
+      for(ll i=0;i<n;i++){
+        lvls[vec[i]]++;
+      }
+      map<ll,ll>lvls2;
+      for(ll i=0;i<n;i++){
+        if(i<n-1) lvls2[i+1]+=(vec[i]-vec[i+1]);
+        else lvls2[i+1]+=vec[i];
+      }
+      bool f=0;
+      for(ll i=1;i<=n;i++){
+        if(!lvls[i]) lvls[i]=0;
+        if(lvls[i]!=lvls2[i]){
+            f=1;
+            break;
+        }
+      }
+      if(vec[0]!=n) cout<<"NO"<<nn;
+      else if(f) cout<<"NO"<<nn;
+      else cout<<"YES"<<nn;
     }
 
 

@@ -152,6 +152,26 @@ struct custom_hash {
         return splitmix64(x + FIXED_RANDOM);
     }
 };
+ll n;
+bool func(ll pos){
+   return pos*(pos-1)<=2*n;
+}
+ll bs(ll low,ll high){
+    ll mid;
+    ll ans=0;
+    while(low<=high){
+        mid=low+(high-low)/2;
+        //cout<<mid<<" "<<func(mid)<<endl;
+        if(func(mid)){
+            ans=mid;
+            low=mid+1;
+        }
+        else{
+            high=mid-1;
+        }
+    }
+    return ans;
+}
 
 int main()
 {
@@ -160,13 +180,16 @@ int main()
     //setIO();
      //ll tno=1;;
      t=1;
-    //cin>>t;
+    cin>>t;
 
     while(t--){
-      vector<ll>vec(5);
-      cin>>vec;
-      next_permutation(all(vec));
-      cout<<vec<<nn;
+      cin>>n;
+      ll l=1,r=3e9;
+      ll ans=bs(l,r);
+    //   cout<<ans<<nn;
+    ll curr=(ans*(ans-1))/2;
+      ll answ=ans+(n-curr);
+      cout<<answ<<nn;
     }
 
 

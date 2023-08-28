@@ -160,13 +160,26 @@ int main()
     //setIO();
      //ll tno=1;;
      t=1;
-    //cin>>t;
+    cin>>t;
 
     while(t--){
-      vector<ll>vec(5);
-      cin>>vec;
-      next_permutation(all(vec));
-      cout<<vec<<nn;
+        ll n,m;
+        cin>>n>>m;
+        char grid[n][m];
+        for(ll i=0;i<n;i++){
+            for(ll j=0;j<m;j++){
+                cin>>grid[i][j];
+            }
+        }
+        ll ans=0;
+        for(ll i=0;i<m;i++){
+            if(grid[n-1][i]=='D') ans++;
+           
+        }
+         for(ll i=0;i<n;i++){
+             if(grid[i][m-1]=='R') ans++;
+         }
+        cout<<ans<<nn;
     }
 
 

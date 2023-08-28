@@ -153,6 +153,28 @@ struct custom_hash {
     }
 };
 
+const ll maxN=2e5+10;//for graph
+#define M 10000
+
+
+vector<ll>g[maxN];
+bool vis[maxN];
+
+vector<ll>ans;
+void dfs(ll vertex){
+    //take action on vertex after entering the vertex
+    vis[vertex]=true;
+    // cout<<vertex<<endl;
+    for(ll child:g[vertex]){
+        // cout<<"par:"<<vertex<<" "<<"child:"<<child<<endl;
+            if(vis[child]) continue;
+        //take action on the node before entering the child
+        dfs(child);
+        //take action on the node after exiting the child
+    }
+    ans.push_back(vertex);
+    //take action on the vertex after exiting the node
+}
 int main()
 {
     fast;
@@ -163,10 +185,19 @@ int main()
     //cin>>t;
 
     while(t--){
-      vector<ll>vec(5);
-      cin>>vec;
-      next_permutation(all(vec));
-      cout<<vec<<nn;
+      ll n;
+      cin>>n;
+      ll x,a;
+      for(ll i=0;i<n;i++){
+        cin>>x;
+        for(ll j=0;j<x;j++){
+            cin>>a;
+            g[i+1].push_back(a);
+        }
+      }
+      dfs(1);
+      ans.pop_back();
+      cout<<ans<<nn;
     }
 
 

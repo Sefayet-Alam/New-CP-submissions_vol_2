@@ -160,13 +160,25 @@ int main()
     //setIO();
      //ll tno=1;;
      t=1;
-    //cin>>t;
+    cin>>t;
 
     while(t--){
-      vector<ll>vec(5);
-      cin>>vec;
-      next_permutation(all(vec));
-      cout<<vec<<nn;
+        ll n;
+        cin>>n;
+        vector<ll>vec(n);
+        cin>>vec;
+        vector<ll>ans;
+        ans.push_back(vec[0]);
+        for(ll i=1;i<n;i++){
+            
+            if(vec[i-1]<=vec[i]) ans.push_back(vec[i]);
+            else{
+                ans.push_back(min(vec[i-1],vec[i]));
+                ans.push_back(vec[i]);
+            }
+        }
+        cout<<ans.size()<<nn;
+        cout<<ans<<nn;
     }
 
 

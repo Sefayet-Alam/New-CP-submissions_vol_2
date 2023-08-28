@@ -160,13 +160,35 @@ int main()
     //setIO();
      //ll tno=1;;
      t=1;
-    //cin>>t;
+    // cin>>t;
 
     while(t--){
-      vector<ll>vec(5);
-      cin>>vec;
-      next_permutation(all(vec));
-      cout<<vec<<nn;
+        ll n;
+        cin>>n;
+        vector<ll>vec(n);
+        cin>>vec;
+        ll sum=0;
+        for(ll i=0;i<n;i++){
+            sum+=vec[i];
+        }
+        ll avg=(sum+1)/2;
+        ll curr=0;
+        ll ans=0;
+        ll day=0;
+        for(ll i=0;i<n;i++){
+            if(curr+vec[i]>avg){
+                ans=i+1;
+                day=avg-curr;
+                break;
+            }
+            else if(curr+vec[i]==avg){
+                ans=i+1;
+                day=vec[i];
+                break;
+            }
+            curr+=vec[i];   
+        }
+        cout<<ans<<" "<<day<<nn;
     }
 
 

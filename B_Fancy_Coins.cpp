@@ -160,13 +160,35 @@ int main()
     //setIO();
      //ll tno=1;;
      t=1;
-    //cin>>t;
+    cin>>t;
 
     while(t--){
-      vector<ll>vec(5);
-      cin>>vec;
-      next_permutation(all(vec));
-      cout<<vec<<nn;
+      ll m,k,a1,ak;
+      cin>>m>>k>>a1>>ak;
+      ll remf=m-min(k*ak,(m/k)*k);
+      ll kmin=min(ak,(m/k));
+      ll rems=remf-(min(remf,a1));
+      ll omin=min(a1,remf);
+    //   cout<<remf<<" "<<rems<<nn;
+       if(rems==0){
+        cout<<0<<nn;
+        continue;
+        }
+      ll fanc2=rems/k;
+      ll fanc1=rems%k;
+
+      if(rems%k==0){
+        cout<<fanc2<<nn;
+        continue;
+      }
+
+      if(rems%k+omin>=k){
+        fanc1=0;
+        fanc2++;
+      }
+
+      cout<<fanc1+fanc2<<nn;
+     
     }
 
 

@@ -153,6 +153,23 @@ struct custom_hash {
     }
 };
 
+vector<pll>vec;
+ll n;
+double dp[10002][10002];
+// map<pair<ll,ll>,double>dp;
+double func(ll i,ll cnt){
+    if(i==n-1){
+        return (1LL<<max(0LL,cnt-1));
+    }
+    if(dp[i][cnt]!=-1) return dp[i][cnt];
+    double minm=(LLONG_MAX*s(1.000));
+    double cost=0;
+    for(ll j=i+1;j<n;j++){
+        cost=sqrt((vec[j].first-vec[i].first)*(vec[j].first-vec[i].first)+(vec[j].second-vec[i].second)*(vec[j].second-vec[i].second));
+        minm=min(minm,cost+func(j,cnt+(j-i-1)));
+    }
+    return dp[i][cnt]=minm;
+}
 int main()
 {
     fast;
@@ -163,10 +180,20 @@ int main()
     //cin>>t;
 
     while(t--){
-      vector<ll>vec(5);
-      cin>>vec;
-      next_permutation(all(vec));
-      cout<<vec<<nn;
+      cin>>n;
+      ll a,b;
+      for(ll i=0;i<n;i++){
+        for(ll j=0;j<n;j++){
+            dp[i][j]=-1;
+        }
+      }
+      
+      for(ll i=0;i<n;i++){
+        cin>>a>>b;
+        vec.push_back({a,b});
+      }
+      double answ=func(0,0);
+      Setpre(10)<<answ<<nn;
     }
 
 

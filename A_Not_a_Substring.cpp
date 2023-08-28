@@ -153,6 +153,14 @@ struct custom_hash {
     }
 };
 
+bool isSubstring(string s1, string s2)
+{
+    // using find method to check if s1 is
+    // a substring of s2
+    if (s2.find(s1) != string::npos)
+        return true;
+    return false;
+}
 int main()
 {
     fast;
@@ -160,13 +168,30 @@ int main()
     //setIO();
      //ll tno=1;;
      t=1;
-    //cin>>t;
+    cin>>t;
 
     while(t--){
-      vector<ll>vec(5);
-      cin>>vec;
-      next_permutation(all(vec));
-      cout<<vec<<nn;
+     
+      string s;
+      cin>>s;
+      ll n=s.size();
+        string s1="",s2="";
+        for(ll i=0;i<n;i++) s1+="()";
+        for(ll i=0;i<n;i++){s2+="(";}
+        for(ll i=0;i<n;i++){s2+=")";}
+        bool f=0,g=0;
+        if(isSubstring(s,s1) && isSubstring(s,s2)){
+            cout<<"NO"<<nn;
+        }
+        else if(isSubstring(s,s1)){
+             cout<<"YES"<<nn;
+            cout<<s2<<nn;
+        }
+        else{
+             cout<<"YES"<<nn;
+            cout<<s1<<nn;
+
+        }
     }
 
 

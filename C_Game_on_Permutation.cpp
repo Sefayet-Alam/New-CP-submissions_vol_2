@@ -160,13 +160,57 @@ int main()
     //setIO();
      //ll tno=1;;
      t=1;
-    //cin>>t;
+    cin>>t;
 
     while(t--){
-      vector<ll>vec(5);
-      cin>>vec;
-      next_permutation(all(vec));
-      cout<<vec<<nn;
+        ll n;
+        cin>>n;
+        vector<ll>vec(n);
+        cin>>vec;
+        vector<ll>vis(n,0);
+        ll currmin=vec[0];
+        vis[0]=1;
+        ll moves=0;
+        ll ans=0;
+        for(ll i=1;i<n;i++){
+            if(vec[i]<currmin){
+                vis[i]=1;
+                currmin=vec[i];
+            }
+        }
+       currmin=LLONG_MAX;
+
+        ll lastmin=LLONG_MAX;
+        bool f=0;
+        // for(ll i=0;i<n;i++){
+        //     if(vis[i]){
+        //         if(i<n-1) lastmin=vec[i+1];
+        //     }
+        //     else{
+        //        if(vec[i]<=lastmin){
+        //         vis[i]=2;
+        //         ans++;
+        //         lastmin=vec[i];
+        //        }
+        //     }
+        // }
+        vector<ll>nums;
+        set<ll>st;
+        for(ll i=0;i<n;i++){
+            if(!vis[i]){
+                if(st.size() &&  vec[i] > *st.begin()){
+                   
+                }
+                else { vis[i]=2; ans++;}
+                st.insert(vec[i]);
+            }
+            else{
+                lastmin=vec[i];
+                // st.insert(vec[i]);
+            }
+        }
+        cout<<ans<<nn;
+        // cout<<vis<<nn;
     }
 
 
