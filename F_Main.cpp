@@ -57,7 +57,7 @@ using namespace __gnu_pbds;
 #define md                  10000007
 #define PI 3.1415926535897932384626
 const double EPS = 1e-9;
-const ll N = 1e3+10;
+const ll N = 2e5+10;
 const ll M = 1e9+7;
 
 
@@ -152,23 +152,6 @@ struct custom_hash {
         return splitmix64(x + FIXED_RANDOM);
     }
 };
-vector<bool> Primes(N,1);
-vector<ll>primenos;
-void SieveOfEratosthenes(ll n)
-{
-    Primes[1]=0;
-    for (ll i=2;i*i<=n;i++) {
-    if(Primes[i]==1){     
-    for(ll j=i*i;j<=n;j+=i)
-        Primes[j]=0;
-        }
-    }
-    for(ll i=1;i<n;i++){
-        if(Primes[i]){
-            primenos.push_back(i);
-        }
-    }
-}
 
 int main()
 {
@@ -178,48 +161,16 @@ int main()
      //ll tno=1;;
      t=1;
     //cin>>t;
-    // SieveOfEratosthenes(N);
+
     while(t--){
-      ll n,m,b;
-      cin>>n>>m>>b;
-      vector<ll>vec(n);
-      cin>>vec;
-      ll curr;
-      map<ll,ll>favs;
-      ll k;
-      for(ll i=0;i<n;i++){
-        for(ll j=2;j<=min(b,1000LL);j++){
-            curr=0;
-            k=vec[i];
-            while(k%j==0){
-                curr+=k/j;
-                k/=j;
-            }
-            curr+=k%j;
-            if(curr==m){
-                cout<<j<<" "<<curr<<nn;
-                favs[j]=1;
-            }
-        }
+      ll n;
+      cin>>n;
+      if(n<=999){
+        cout<<"ABC"<<nn;
       }
-      vector<ll>bases;
-      for(auto it:favs){
-        // cout<<it<<nn;
-        bases.push_back(it.first);
+      else{
+        cout<<"ABD"<<nn;
       }
-      vector<ll>vis(b+1,0);
-      for(ll i=0;i<bases.size();i++){
-        vis[bases[i]]=1;
-        for(ll j=i+1;j<bases.size();j++){
-            vis[bases[i]*bases[j]]=1;
-        }
-      }
-      vector<ll>ans;
-      for(ll i=0;i<=b;i++){
-        if(vis[i]) ans.push_back(i);
-      }
-      cout<<ans.size()<<nn;
-      cout<<ans<<nn;
     }
 
 

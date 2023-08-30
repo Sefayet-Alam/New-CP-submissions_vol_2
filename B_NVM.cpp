@@ -57,7 +57,7 @@ using namespace __gnu_pbds;
 #define md                  10000007
 #define PI 3.1415926535897932384626
 const double EPS = 1e-9;
-const ll N = 1e3+10;
+const ll N = 2e5+10;
 const ll M = 1e9+7;
 
 
@@ -152,23 +152,7 @@ struct custom_hash {
         return splitmix64(x + FIXED_RANDOM);
     }
 };
-vector<bool> Primes(N,1);
-vector<ll>primenos;
-void SieveOfEratosthenes(ll n)
-{
-    Primes[1]=0;
-    for (ll i=2;i*i<=n;i++) {
-    if(Primes[i]==1){     
-    for(ll j=i*i;j<=n;j+=i)
-        Primes[j]=0;
-        }
-    }
-    for(ll i=1;i<n;i++){
-        if(Primes[i]){
-            primenos.push_back(i);
-        }
-    }
-}
+
 
 int main()
 {
@@ -177,49 +161,44 @@ int main()
     //setIO();
      //ll tno=1;;
      t=1;
-    //cin>>t;
-    // SieveOfEratosthenes(N);
+    cin>>t;
+
     while(t--){
-      ll n,m,b;
-      cin>>n>>m>>b;
+      ll n;
+      cin>>n;
       vector<ll>vec(n);
       cin>>vec;
-      ll curr;
-      map<ll,ll>favs;
-      ll k;
-      for(ll i=0;i<n;i++){
-        for(ll j=2;j<=min(b,1000LL);j++){
-            curr=0;
-            k=vec[i];
-            while(k%j==0){
-                curr+=k/j;
-                k/=j;
-            }
-            curr+=k%j;
-            if(curr==m){
-                cout<<j<<" "<<curr<<nn;
-                favs[j]=1;
-            }
+      if(n==1){
+        cout<<1<<nn;
+        continue;
+      }
+      if(n==2){
+        if(vec[0]!=vec[1]) cout<<1<<nn;
+        else cout<<2<<nn;
+        continue;
+      }
+        map<ll,ll>freq;
+        for(ll i=0;i<n;i++){
+            freq[vec[i]]++;
         }
-      }
-      vector<ll>bases;
-      for(auto it:favs){
-        // cout<<it<<nn;
-        bases.push_back(it.first);
-      }
-      vector<ll>vis(b+1,0);
-      for(ll i=0;i<bases.size();i++){
-        vis[bases[i]]=1;
-        for(ll j=i+1;j<bases.size();j++){
-            vis[bases[i]*bases[j]]=1;
+        vector<pll>alls;
+        for(auto it:freq){
+            if(it.second) alls.push_back({it.first,it.second});
         }
-      }
-      vector<ll>ans;
-      for(ll i=0;i<=b;i++){
-        if(vis[i]) ans.push_back(i);
-      }
-      cout<<ans.size()<<nn;
-      cout<<ans<<nn;
+       ll maxm=0;
+       ll rg=0;
+       for(ll i=0;i<alls.size()-1;i++){
+        ll curr=n-rg;
+        ll tomin=(freq.size()-i-1);
+        // cout<<n<<" "<<curr<<" "<<rg<<" "<<tomin<<" "<<rem<<" "<<curr-tomin+min(tomin,rg)+max(0LL,rem-1)<<nn;
+        maxm=max(curr-tomin+min(tomin,rg)+max(0LL,rg-tomin-1),maxm);
+        // if(rg>=tomin) break;
+        rg+=alls[i].second;
+        
+       }
+       cout<<maxm<<nn;
+
+      
     }
 
 

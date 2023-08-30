@@ -163,18 +163,18 @@ int main()
     //cin>>t;
 
     while(t--){
-        ll n,m;
-        cin>>n>>m;
-        ll ans=1;
-        for(ll i=1;i*i<=m;i++){
-            if(m/i>=n && m%i==0){
-                ans=max(ans,i);
-            }
-            else if(i>=n && m%i==0){
-                ans=max(ans,m/i);
-            }
-        }
-        cout<<ans<<nn;
+      ll n;
+      cin>>n;
+      ll pos=0,neg=0;
+      ll m,c;
+      cin>>m>>c;
+      ll x,y,p;
+      for(ll i=0;i<n;i++){
+        cin>>x>>y>>p;
+        if(y-m*x-c<0) pos+=p;
+        else neg+=p;
+      }
+      cout<<max(pos,neg)<<nn;
     }
 
 
