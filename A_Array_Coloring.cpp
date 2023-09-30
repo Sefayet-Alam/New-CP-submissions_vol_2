@@ -1,8 +1,7 @@
 #include<bits/stdc++.h>
-#include<ext/pb_ds/assoc_container.hpp>
-#include<ext/pb_ds/tree_policy.hpp>
+
 using namespace std;
-using namespace __gnu_pbds;
+
 
 //VVI
 #define fast ios_base::sync_with_stdio(0);cin.tie(0);cout.tie(0);
