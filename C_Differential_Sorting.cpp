@@ -153,9 +153,6 @@ struct custom_hash {
     }
 };
 
-
-
-
 int main()
 {
     fast;
@@ -163,54 +160,38 @@ int main()
     //setIO();
      //ll tno=1;;
      t=1;
-    //cin>>t;
+    cin>>t;
 
     while(t--){
-        string s;
-        vector<string>vec;
-        while(cin>>s){
-            vec.push_back(s);
+        ll n;
+        cin>>n;
+        vector<ll>vec(n);
+        cin>>vec;
+        if(is_sorted(all(vec))){
+            cout<<0<<nn;
+            continue;
         }
-        // cout<<vec<<nn;
-        if(vec.size()>3){cout<<0<<nn;}
+       
+        if(vec[n-2]>vec[n-1]){
+            cout<<-1<<nn;
+            continue;
+        }
+        if(vec[n-2]<0 && vec[n-1]<0){
+            cout<<-1<<nn;
+            continue;
+        }
         else{
-            vector<ll>nos;
-            bool f=0;
-            for(auto it:vec){
-                string curr=it;
-                for(ll j=0;j<curr.size();j++){
-                    if(curr[j]>='0' && curr[j]<='9'){}
-                    else f=1;
-                }
-                if(it.size()>10) f=1;
-                if(f) break;
-                else{
-                    ll x=stoll(curr);
-                    nos.push_back(x);
-                }
+            ll number=vec[n-2]-vec[n-1];
+            vector<pair<ll,pll>>ans;
+            for(ll i=0;i<n-2;i++){
+                ans.push_back({i+1,{n-1,n}});
             }
-            if(f || nos.size()!=3) cout<<0<<nn;
-            else{
-               
-                ll a=nos[0];
-                ll b=nos[1];
-                ll c=nos[2];
-                if(a>3 && a<=1e9 &&  b>0 && c>0){
-                     for(ll i=2;i*i<=b;i++){
-                        if(b%i==0) f=1;
-                     }
-                     for(ll i=2;i*i<=c;i++){
-                        if(c%i==0) f=1;
-                     }
-                     if(a%2 || a!=b+c) f=1;
-
-                     if(f) cout<<0<<nn;
-                     else cout<<1<<nn;
-                }
-                else cout<<0<<nn;
-
+            cout<<ans.size()<<nn;
+            for(auto it:ans){
+                cout<<it<<nn;
             }
         }
+
     }
 
 

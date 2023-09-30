@@ -57,7 +57,7 @@ using namespace __gnu_pbds;
 #define md                  10000007
 #define PI 3.1415926535897932384626
 const double EPS = 1e-9;
-const ll N = 2e5+10;
+const ll N = 1 << 17;
 const ll M = 1e9+7;
 
 
@@ -155,7 +155,8 @@ struct custom_hash {
 
 
 
-
+vector<ll>g[N];
+ll dp[N];
 int main()
 {
     fast;
@@ -166,51 +167,26 @@ int main()
     //cin>>t;
 
     while(t--){
-        string s;
-        vector<string>vec;
-        while(cin>>s){
-            vec.push_back(s);
-        }
-        // cout<<vec<<nn;
-        if(vec.size()>3){cout<<0<<nn;}
-        else{
-            vector<ll>nos;
-            bool f=0;
-            for(auto it:vec){
-                string curr=it;
-                for(ll j=0;j<curr.size();j++){
-                    if(curr[j]>='0' && curr[j]<='9'){}
-                    else f=1;
-                }
-                if(it.size()>10) f=1;
-                if(f) break;
-                else{
-                    ll x=stoll(curr);
-                    nos.push_back(x);
-                }
-            }
-            if(f || nos.size()!=3) cout<<0<<nn;
-            else{
-               
-                ll a=nos[0];
-                ll b=nos[1];
-                ll c=nos[2];
-                if(a>3 && a<=1e9 &&  b>0 && c>0){
-                     for(ll i=2;i*i<=b;i++){
-                        if(b%i==0) f=1;
-                     }
-                     for(ll i=2;i*i<=c;i++){
-                        if(c%i==0) f=1;
-                     }
-                     if(a%2 || a!=b+c) f=1;
-
-                     if(f) cout<<0<<nn;
-                     else cout<<1<<nn;
-                }
-                else cout<<0<<nn;
-
+      ll n,m;
+      cin>>n>>m;
+      ll x,y;
+      for(ll i=0;i<m;i++){
+        cin>>x>>y;
+        g[x].push_back(y);
+        g[y].push_back(x);
+      }
+      ll ans=-1LL;
+      mem(dp,0);
+      for(ll i=1;i<=n;i++){
+        dp[i]=1;
+        for(auto u:g[i]){
+            if(u<i){
+                dp[i]=max(dp[i],dp[u]+1);
             }
         }
+        ans=max(ans,dp[i]*(ll)g[i].size());
+      }
+      cout<<ans<<nn;
     }
 
 

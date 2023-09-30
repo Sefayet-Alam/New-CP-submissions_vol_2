@@ -153,67 +153,69 @@ struct custom_hash {
     }
 };
 
-
-
-
 int main()
 {
     fast;
-     ll t;
+     ll tc;
     //setIO();
      //ll tno=1;;
-     t=1;
-    //cin>>t;
+     tc=1;
+    cin>>tc;
 
-    while(t--){
-        string s;
-        vector<string>vec;
-        while(cin>>s){
-            vec.push_back(s);
+    while(tc--){
+        ll n;
+        cin>>n;
+        string s,t;
+        cin>>s>>t;
+        vector<bool> diff(n,0);
+        for(ll i=0;i<n;i++){
+            if(s[i]!=t[i]) diff[i]=1;
+            else diff[i]=0;
         }
-        // cout<<vec<<nn;
-        if(vec.size()>3){cout<<0<<nn;}
-        else{
-            vector<ll>nos;
-            bool f=0;
-            for(auto it:vec){
-                string curr=it;
-                for(ll j=0;j<curr.size();j++){
-                    if(curr[j]>='0' && curr[j]<='9'){}
-                    else f=1;
-                }
-                if(it.size()>10) f=1;
-                if(f) break;
-                else{
-                    ll x=stoll(curr);
-                    nos.push_back(x);
-                }
+       
+        bool f=0;
+        ll firston=-1;
+        ll laston=-1;
+        for(ll i=0;i<n;i++){
+            if(diff[i]==1){
+                firston=i;
+                break;
             }
-            if(f || nos.size()!=3) cout<<0<<nn;
-            else{
-               
-                ll a=nos[0];
-                ll b=nos[1];
-                ll c=nos[2];
-                if(a>3 && a<=1e9 &&  b>0 && c>0){
-                     for(ll i=2;i*i<=b;i++){
-                        if(b%i==0) f=1;
-                     }
-                     for(ll i=2;i*i<=c;i++){
-                        if(c%i==0) f=1;
-                     }
-                     if(a%2 || a!=b+c) f=1;
-
-                     if(f) cout<<0<<nn;
-                     else cout<<1<<nn;
-                }
-                else cout<<0<<nn;
-
+        }
+        for(ll i=n-1;i>=0;i--){
+            if(diff[i]==1){
+                laston=i;
+                break;
             }
+        }
+        ll change=0;
+        // deb(firston),deb(laston);
+        for(ll i=firston;i<laston;i++){
+            if(diff[i]!=diff[i+1]) change++;
+        }
+        // cout<<change<<nn;
+        if(firston==-1 && laston==-1){
+            //all 0s
+           cout<<(n*(n+1)/2)<<endl;
+        }
+        else if(change>2){
+            //0 sets more than one between two 1s
+            cout<<0<<nn;
+        }
+        else if(change==2){
+            cout<<6<<nn;
+        }
+        else if(change==0){
+            // all one
+            ll bef=firston;
+            ll af=n-1-laston;
+            ll ans=bef*2+af*2; //taking prefix and suffix zeros
+            ll toton=laston-firston+1;
+            ans+=(toton-1)*2;
+            cout<<ans<<nn;
         }
     }
 
 
     return 0;
 }
-

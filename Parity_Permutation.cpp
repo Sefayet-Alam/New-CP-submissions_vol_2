@@ -57,7 +57,7 @@ using namespace __gnu_pbds;
 #define md                  10000007
 #define PI 3.1415926535897932384626
 const double EPS = 1e-9;
-const ll N = 2e5+10;
+const ll N = 2e5+100;
 const ll M = 1e9+7;
 
 
@@ -152,9 +152,17 @@ struct custom_hash {
         return splitmix64(x + FIXED_RANDOM);
     }
 };
-
-
-
+ll FM[N];
+ll is_initialized = 0;
+ll factorialMod(ll n, ll x){
+    if (!is_initialized){
+        FM[0] = 1 % x;
+        for (ll i = 1; i < N; i++)
+            FM[i] = (FM[i - 1] * i) % x;
+        is_initialized = 1;
+    }
+    return FM[n];
+}
 
 int main()
 {
@@ -163,52 +171,58 @@ int main()
     //setIO();
      //ll tno=1;;
      t=1;
-    //cin>>t;
+    cin>>t;
 
     while(t--){
-        string s;
-        vector<string>vec;
-        while(cin>>s){
-            vec.push_back(s);
+        ll n,k;
+        cin>>n>>k;
+        vector<ll>vec(n);
+        cin>>vec;
+        ll odd=0,ev=0;
+        if(n==1){
+            cout<<0<<nn;
+            continue;
         }
-        // cout<<vec<<nn;
-        if(vec.size()>3){cout<<0<<nn;}
-        else{
-            vector<ll>nos;
-            bool f=0;
-            for(auto it:vec){
-                string curr=it;
-                for(ll j=0;j<curr.size();j++){
-                    if(curr[j]>='0' && curr[j]<='9'){}
-                    else f=1;
-                }
-                if(it.size()>10) f=1;
-                if(f) break;
-                else{
-                    ll x=stoll(curr);
-                    nos.push_back(x);
-                }
+        
+        ll ans,a1,a2,other;
+        for(ll i=0;i<n;i++){
+            if(vec[i]%2) odd++;
+            else ev++;
+        }
+        if(k==0){
+            if(odd==n || ev==n){
+                 ans=factorialMod(n,M);
+                cout<<ans<<nn;
             }
-            if(f || nos.size()!=3) cout<<0<<nn;
+            else cout<<0<<nn;
+        }
+        else{
+            if(n%2==0){
+            if(odd==n/2){
+                other=n-odd;
+                a1=factorialMod(odd,M);
+                a2=factorialMod(other,M);
+                ans=(2*a1*a2)%M;
+                cout<<ans<<nn;
+            }
+            else cout<<0<<nn;
+            }
             else{
-               
-                ll a=nos[0];
-                ll b=nos[1];
-                ll c=nos[2];
-                if(a>3 && a<=1e9 &&  b>0 && c>0){
-                     for(ll i=2;i*i<=b;i++){
-                        if(b%i==0) f=1;
-                     }
-                     for(ll i=2;i*i<=c;i++){
-                        if(c%i==0) f=1;
-                     }
-                     if(a%2 || a!=b+c) f=1;
-
-                     if(f) cout<<0<<nn;
-                     else cout<<1<<nn;
-                }
-                else cout<<0<<nn;
-
+            if(odd==n/2){
+                other=n-odd;
+                a1=factorialMod(odd,M);
+                a2=factorialMod(other,M);
+                ans=(a1*a2)%M;
+                cout<<ans<<nn;
+            }
+            else if(ev==n/2){
+                other=n-ev;
+                a1=factorialMod(ev,M);
+                a2=factorialMod(other,M);
+                ans=(a1*a2)%M;
+                cout<<ans<<nn;
+            }
+            else cout<<0<<nn;
             }
         }
     }

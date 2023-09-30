@@ -58,7 +58,7 @@ using namespace __gnu_pbds;
 #define PI 3.1415926535897932384626
 const double EPS = 1e-9;
 const ll N = 2e5+10;
-const ll M = 1e9+7;
+const ll M = 998244353;
 
 
 ///INLINE FUNCTIONS
@@ -152,8 +152,17 @@ struct custom_hash {
         return splitmix64(x + FIXED_RANDOM);
     }
 };
-
-
+ll FM[N];
+int is_initialized = 0;
+ll factorialMod(ll n, ll x){
+    if (!is_initialized){
+        FM[0] = 1 % x;
+        for (int i = 1; i < N; i++)
+            FM[i] = (FM[i - 1] * i) % x;
+        is_initialized = 1;
+    }
+    return FM[n];
+}
 
 
 int main()
@@ -163,54 +172,44 @@ int main()
     //setIO();
      //ll tno=1;;
      t=1;
-    //cin>>t;
+    cin>>t;
 
     while(t--){
-        string s;
-        vector<string>vec;
-        while(cin>>s){
-            vec.push_back(s);
+    string s;
+    cin>>s;
+    vector<ll>lens;
+    ll zs=0;
+    ll n=s.size();
+    ll curr=0;
+    for(ll i=0;i<n;i++){
+        if(s[i]=='0') curr++;
+        else{ 
+            if(curr>1) lens.push_back(curr);
+            curr=0;
         }
-        // cout<<vec<<nn;
-        if(vec.size()>3){cout<<0<<nn;}
-        else{
-            vector<ll>nos;
-            bool f=0;
-            for(auto it:vec){
-                string curr=it;
-                for(ll j=0;j<curr.size();j++){
-                    if(curr[j]>='0' && curr[j]<='9'){}
-                    else f=1;
-                }
-                if(it.size()>10) f=1;
-                if(f) break;
-                else{
-                    ll x=stoll(curr);
-                    nos.push_back(x);
-                }
-            }
-            if(f || nos.size()!=3) cout<<0<<nn;
-            else{
-               
-                ll a=nos[0];
-                ll b=nos[1];
-                ll c=nos[2];
-                if(a>3 && a<=1e9 &&  b>0 && c>0){
-                     for(ll i=2;i*i<=b;i++){
-                        if(b%i==0) f=1;
-                     }
-                     for(ll i=2;i*i<=c;i++){
-                        if(c%i==0) f=1;
-                     }
-                     if(a%2 || a!=b+c) f=1;
-
-                     if(f) cout<<0<<nn;
-                     else cout<<1<<nn;
-                }
-                else cout<<0<<nn;
-
-            }
+    }
+    if(curr>1){
+        lens.push_back(curr);
+    }
+    curr=0;
+     for(ll i=0;i<n;i++){
+        if(s[i]=='1') curr++;
+        else{ 
+            if(curr>1) lens.push_back(curr);
+            curr=0;
         }
+    }
+    if(curr>1){
+        lens.push_back(curr);
+    }
+    ll cnt=0;
+    ll ans=1;
+    for(auto it:lens){
+        cnt+=(it-1);
+        ans=(ans*it)%M;
+    }
+    // if(cnt==0 && ans==0) ans=1;
+    cout<<cnt<<" "<<(ans*(factorialMod(cnt,M)))%M<<nn;
     }
 
 

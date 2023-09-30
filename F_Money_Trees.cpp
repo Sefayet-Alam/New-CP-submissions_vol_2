@@ -57,7 +57,7 @@ using namespace __gnu_pbds;
 #define md                  10000007
 #define PI 3.1415926535897932384626
 const double EPS = 1e-9;
-const ll N = 2e5+10;
+const ll N = 3e5+10;
 const ll M = 1e9+7;
 
 
@@ -152,9 +152,34 @@ struct custom_hash {
         return splitmix64(x + FIXED_RANDOM);
     }
 };
-
-
-
+ll n,k;
+vector<ll>a(N),h(N);
+vector<pll>poss;
+ll atMostSum(ll i)
+{
+    ll l=poss[i].first,r=poss[i].first;
+    ll maxm=0;
+    ll curr=0;
+    ll sz=poss[i].second+1;
+    // cout<<pos<<nn;
+    while(r<sz){
+        if(curr+a[r]<=k){
+            curr+=a[r];
+            maxm=max(maxm,r-l+1);
+            r++;
+        }
+        else if(l==r){
+            curr+=a[r];
+            r++;
+        }
+        else{
+            curr-=a[l];
+            l++;
+        }  
+        // cout<<l<<" "<<r<<" "<<maxm<<nn;
+    }
+    return maxm;
+}
 
 int main()
 {
@@ -163,54 +188,49 @@ int main()
     //setIO();
      //ll tno=1;;
      t=1;
-    //cin>>t;
+    cin>>t;
 
     while(t--){
-        string s;
-        vector<string>vec;
-        while(cin>>s){
-            vec.push_back(s);
-        }
-        // cout<<vec<<nn;
-        if(vec.size()>3){cout<<0<<nn;}
-        else{
-            vector<ll>nos;
-            bool f=0;
-            for(auto it:vec){
-                string curr=it;
-                for(ll j=0;j<curr.size();j++){
-                    if(curr[j]>='0' && curr[j]<='9'){}
-                    else f=1;
-                }
-                if(it.size()>10) f=1;
-                if(f) break;
-                else{
-                    ll x=stoll(curr);
-                    nos.push_back(x);
-                }
+       
+        cin>>n>>k;
+       a.resize(n);
+       h.resize(n);
+        cin>>a>>h;
+        ll curr=0;
+
+        ll l=0;
+        ll st=n+1,en=-1;
+        vector<ll>vec[n+1000];
+        for(ll i=0;i<n-1;i++){
+            if((h[i]%h[i+1])==0){
+              curr++;
+              st=min(st,i);
+              en=max(en,i);
             }
-            if(f || nos.size()!=3) cout<<0<<nn;
             else{
-               
-                ll a=nos[0];
-                ll b=nos[1];
-                ll c=nos[2];
-                if(a>3 && a<=1e9 &&  b>0 && c>0){
-                     for(ll i=2;i*i<=b;i++){
-                        if(b%i==0) f=1;
-                     }
-                     for(ll i=2;i*i<=c;i++){
-                        if(c%i==0) f=1;
-                     }
-                     if(a%2 || a!=b+c) f=1;
-
-                     if(f) cout<<0<<nn;
-                     else cout<<1<<nn;
+                if(curr){en=i;poss.push_back({st,en});st=n,en=-1;}
+                else if(a[i]<=k){st=i,en=i; poss.push_back({st,en});st=n,en=-1;}
+                else{
+                    st=n,en=-1;
                 }
-                else cout<<0<<nn;
-
+                curr=0;
             }
         }
+        if(curr){en=n-1;poss.push_back({st,en});st=n,en=-1;}
+        else if(a[n-1]<=k){st=n-1,en=n-1; poss.push_back({st,en});st=n,en=-1;}
+        else{
+             st=n,en=-1;
+        }
+
+        ll ans=0;
+        
+        for(ll i=0;i<poss.size();i++){
+            ans=max(ans,atMostSum(i));
+        }
+        cout<<ans<<nn;
+        poss.clear();
+         
+        
     }
 
 

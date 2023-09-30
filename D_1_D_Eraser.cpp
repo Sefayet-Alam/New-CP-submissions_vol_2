@@ -153,9 +153,6 @@ struct custom_hash {
     }
 };
 
-
-
-
 int main()
 {
     fast;
@@ -163,54 +160,35 @@ int main()
     //setIO();
      //ll tno=1;;
      t=1;
-    //cin>>t;
+    cin>>t;
 
     while(t--){
-        string s;
-        vector<string>vec;
-        while(cin>>s){
-            vec.push_back(s);
+      ll n,k;
+      cin>>n>>k;
+      string s;
+      cin>>s;
+      ll curr=0;
+      ll ans=0;
+      for(ll i=0;i<n;i++){
+        if(s[i]=='B' && curr<k){
+            curr++;
         }
-        // cout<<vec<<nn;
-        if(vec.size()>3){cout<<0<<nn;}
+        else if(s[i]=='B' && curr>=k){
+            curr=1;
+            ans++;
+        }
         else{
-            vector<ll>nos;
-            bool f=0;
-            for(auto it:vec){
-                string curr=it;
-                for(ll j=0;j<curr.size();j++){
-                    if(curr[j]>='0' && curr[j]<='9'){}
-                    else f=1;
-                }
-                if(it.size()>10) f=1;
-                if(f) break;
-                else{
-                    ll x=stoll(curr);
-                    nos.push_back(x);
-                }
-            }
-            if(f || nos.size()!=3) cout<<0<<nn;
+           if(curr){
+            if(curr<k) curr++;
             else{
-               
-                ll a=nos[0];
-                ll b=nos[1];
-                ll c=nos[2];
-                if(a>3 && a<=1e9 &&  b>0 && c>0){
-                     for(ll i=2;i*i<=b;i++){
-                        if(b%i==0) f=1;
-                     }
-                     for(ll i=2;i*i<=c;i++){
-                        if(c%i==0) f=1;
-                     }
-                     if(a%2 || a!=b+c) f=1;
-
-                     if(f) cout<<0<<nn;
-                     else cout<<1<<nn;
-                }
-                else cout<<0<<nn;
-
+                curr=0;
+                ans++;
             }
+           }
         }
+      }
+      if(curr) ans++;
+      cout<<ans<<nn;
     }
 
 

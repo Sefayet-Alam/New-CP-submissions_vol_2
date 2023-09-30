@@ -152,8 +152,35 @@ struct custom_hash {
         return splitmix64(x + FIXED_RANDOM);
     }
 };
+ll n,x;
+vector<ll>vec(N);
+ll func(ll pos){
+    ll curr=0;
+    for(ll i=0;i<n;i++){
+        curr+=max(0LL,pos-vec[i]);
+        if(curr>x) return false;
+    }
+    return curr<=x;
+}
 
 
+ll bs(ll low,ll high){
+    ll mid;
+    ll ans=0;
+    while(low<=high){
+        mid=low+(high-low)/2;
+        //cout<<mid<<" "<<func(mid)<<endl;
+        if(func(mid)){
+            ans=mid;
+            low=mid+1;
+            
+        }
+        else{
+            high=mid-1;
+        }
+    }
+    return ans;
+}
 
 
 int main()
@@ -163,54 +190,17 @@ int main()
     //setIO();
      //ll tno=1;;
      t=1;
-    //cin>>t;
+    cin>>t;
 
     while(t--){
-        string s;
-        vector<string>vec;
-        while(cin>>s){
-            vec.push_back(s);
-        }
-        // cout<<vec<<nn;
-        if(vec.size()>3){cout<<0<<nn;}
-        else{
-            vector<ll>nos;
-            bool f=0;
-            for(auto it:vec){
-                string curr=it;
-                for(ll j=0;j<curr.size();j++){
-                    if(curr[j]>='0' && curr[j]<='9'){}
-                    else f=1;
-                }
-                if(it.size()>10) f=1;
-                if(f) break;
-                else{
-                    ll x=stoll(curr);
-                    nos.push_back(x);
-                }
-            }
-            if(f || nos.size()!=3) cout<<0<<nn;
-            else{
-               
-                ll a=nos[0];
-                ll b=nos[1];
-                ll c=nos[2];
-                if(a>3 && a<=1e9 &&  b>0 && c>0){
-                     for(ll i=2;i*i<=b;i++){
-                        if(b%i==0) f=1;
-                     }
-                     for(ll i=2;i*i<=c;i++){
-                        if(c%i==0) f=1;
-                     }
-                     if(a%2 || a!=b+c) f=1;
-
-                     if(f) cout<<0<<nn;
-                     else cout<<1<<nn;
-                }
-                else cout<<0<<nn;
-
-            }
-        }
+        
+        cin>>n>>x;
+        vec.resize(n);
+        cin>>vec;
+        sort(all(vec));
+        ll l=0,r=1e9+10;
+        ll ans=bs(l,r);
+        cout<<ans<<nn;
     }
 
 

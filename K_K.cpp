@@ -57,7 +57,7 @@ using namespace __gnu_pbds;
 #define md                  10000007
 #define PI 3.1415926535897932384626
 const double EPS = 1e-9;
-const ll N = 2e5+10;
+const ll N = 1e4+5;
 const ll M = 1e9+7;
 
 
@@ -152,10 +152,20 @@ struct custom_hash {
         return splitmix64(x + FIXED_RANDOM);
     }
 };
-
-
-
-
+ll dp[N][105][11];
+ll powr[105][11];
+ll func(ll n,ll m,ll p){
+    if(p==-1 || n<0) return 0;
+    if(n==0) return 1;
+    
+    ll &ret=dp[n][m][p];
+    if(~ret) return ret;
+    ret=0;
+    ret+=func(n,m,p-1);
+    ret+=func(n-powr[m][p],m,p);
+   
+    return ret;
+}
 int main()
 {
     fast;
@@ -163,54 +173,25 @@ int main()
     //setIO();
      //ll tno=1;;
      t=1;
-    //cin>>t;
-
+    cin>>t;
+    
+    for(ll i=1;i<105;i++){
+        powr[i][0]=1;
+        for(ll j=1;j<11;j++){
+            powr[i][j]=min(powr[i][j-1]*i,N);
+        }
+    }
     while(t--){
-        string s;
-        vector<string>vec;
-        while(cin>>s){
-            vec.push_back(s);
-        }
-        // cout<<vec<<nn;
-        if(vec.size()>3){cout<<0<<nn;}
-        else{
-            vector<ll>nos;
-            bool f=0;
-            for(auto it:vec){
-                string curr=it;
-                for(ll j=0;j<curr.size();j++){
-                    if(curr[j]>='0' && curr[j]<='9'){}
-                    else f=1;
-                }
-                if(it.size()>10) f=1;
-                if(f) break;
-                else{
-                    ll x=stoll(curr);
-                    nos.push_back(x);
-                }
+        ll n,m,k;
+        cin>>k>>m>>n;
+       for(ll i=0;i<=n+1;i++){
+            for(ll k=0;k<11;k++){
+                dp[i][m][k]=-1;
             }
-            if(f || nos.size()!=3) cout<<0<<nn;
-            else{
-               
-                ll a=nos[0];
-                ll b=nos[1];
-                ll c=nos[2];
-                if(a>3 && a<=1e9 &&  b>0 && c>0){
-                     for(ll i=2;i*i<=b;i++){
-                        if(b%i==0) f=1;
-                     }
-                     for(ll i=2;i*i<=c;i++){
-                        if(c%i==0) f=1;
-                     }
-                     if(a%2 || a!=b+c) f=1;
-
-                     if(f) cout<<0<<nn;
-                     else cout<<1<<nn;
-                }
-                else cout<<0<<nn;
-
-            }
-        }
+       }
+        ll ans=func(n,m,10);
+        cout<<k<<" "<<ans<<nn;
+    
     }
 
 
