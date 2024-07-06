@@ -160,38 +160,14 @@ int main()
     //setIO();
      //ll tno=1;;
      t=1;
-    cin>>t;
+    //cin>>t;
 
     while(t--){
-        ll n,m;
-        cin>>n>>m;
-        vector<ll>a(n),b(m);
-        cin>>a>>b;
-
-         ll orr=0;
-        for(ll i=0;i<m;i++){
-            orr=b[i]|orr;
-        }
-        ll xr=a[0];
-        for(ll i=1;i<n;i++){
-           xr=(xr^a[i]);
-        }
-        ll maxm=xr;
-        for(ll i=0;i<n;i++){
-            a[i]=(a[i]|orr);
-        }
-        ll minm=a[0];
-         for(ll i=1;i<n;i++){
-           minm=(minm^a[i]);
-        }
-      if(n%2==0){
-        cout<<minm<<" "<<maxm<<nn;
-      }
-      else{
-          cout<<maxm<<" "<<minm<<nn;
-      }
-
-
+      ll a,b,c;
+      cin>>a>>b>>c;
+      ll num=a*100+b*10+c;
+      if(num%4==0) cout<<"YES"<<nn;
+      else cout<<"NO"<<nn;
     }
 
 

@@ -57,7 +57,7 @@ using namespace __gnu_pbds;
 #define md                  10000007
 #define PI 3.1415926535897932384626
 const double EPS = 1e-9;
-const ll N = 2e5+10;
+const ll N = 1e4+5;
 const ll M = 1e9+7;
 
 
@@ -152,7 +152,20 @@ struct custom_hash {
         return splitmix64(x + FIXED_RANDOM);
     }
 };
-
+ll dp[N][105][11];
+ll powr[105][11];
+ll func(ll n,ll m,ll p){
+    if(p==-1 || n<0) return 0;
+    if(n==0) return 1;
+    
+    ll &ret=dp[n][m][p];
+    if(~ret) return ret;
+    ret=0;
+    ret+=func(n,m,p-1);
+    ret+=func(n-powr[m][p],m,p);
+   
+    return ret;
+}
 int main()
 {
     fast;
@@ -161,37 +174,24 @@ int main()
      //ll tno=1;;
      t=1;
     cin>>t;
-
+    
+    for(ll i=1;i<105;i++){
+        powr[i][0]=1;
+        for(ll j=1;j<11;j++){
+            powr[i][j]=min(powr[i][j-1]*i,N);
+        }
+    }
     while(t--){
-        ll n,m;
-        cin>>n>>m;
-        vector<ll>a(n),b(m);
-        cin>>a>>b;
-
-         ll orr=0;
-        for(ll i=0;i<m;i++){
-            orr=b[i]|orr;
-        }
-        ll xr=a[0];
-        for(ll i=1;i<n;i++){
-           xr=(xr^a[i]);
-        }
-        ll maxm=xr;
-        for(ll i=0;i<n;i++){
-            a[i]=(a[i]|orr);
-        }
-        ll minm=a[0];
-         for(ll i=1;i<n;i++){
-           minm=(minm^a[i]);
-        }
-      if(n%2==0){
-        cout<<minm<<" "<<maxm<<nn;
-      }
-      else{
-          cout<<maxm<<" "<<minm<<nn;
-      }
-
-
+        ll n,m,k;
+        cin>>k>>m>>n;
+       for(ll i=0;i<=n+1;i++){
+            for(ll k=0;k<11;k++){
+                dp[i][m][k]=-1;
+            }
+       }
+        ll ans=func(n,m,10);
+        cout<<k<<" "<<ans<<nn;
+    
     }
 
 

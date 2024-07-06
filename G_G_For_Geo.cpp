@@ -160,41 +160,80 @@ int main()
     //setIO();
      //ll tno=1;;
      t=1;
-    cin>>t;
+    //cin>>t;
 
     while(t--){
-        ll n,m;
-        cin>>n>>m;
-        vector<ll>a(n),b(m);
-        cin>>a>>b;
-
-         ll orr=0;
-        for(ll i=0;i<m;i++){
-            orr=b[i]|orr;
+      ll n,m;
+      cin>>n>>m;
+      ll grid[n][m];
+      for(ll i=0;i<n;i++){
+        for(ll j=0;j<m;j++){
+            cin>>grid[i][j];
         }
-        ll xr=a[0];
-        for(ll i=1;i<n;i++){
-           xr=(xr^a[i]);
-        }
-        ll maxm=xr;
+      }
+      ll op=0;
+      bool vis[n+1];
+      mem(vis,0);
+     
+      for(ll j=0;j<m;j++){
+        map<ll,ll>mpp;
         for(ll i=0;i<n;i++){
-            a[i]=(a[i]|orr);
+            if(grid[i][j]!=j+1) mpp[grid[i][j]]++;
         }
-        ll minm=a[0];
-         for(ll i=1;i<n;i++){
-           minm=(minm^a[i]);
+        ll no=-1;
+        for(auto it:mpp){
+            if(it.second>n/2){
+                no=it.first;
+                // break;
+            }
         }
-      if(n%2==0){
-        cout<<minm<<" "<<maxm<<nn;
-      }
-      else{
-          cout<<maxm<<" "<<minm<<nn;
-      }
-
-
+        if(no!=-1 && !vis[j] && !vis[no-1]){
+            op++;
+            vis[j]=vis[no-1]=1;
+            for(ll i=0;i<n;i++){
+                swap(grid[i][j],grid[i][no-1]);
+            }
+        }
+        mpp.clear();
+       }
+       
+    //   cout<<op<<nn;
+    ll pos[n+10][m+10];
+    for(ll i=0;i<n;i++){
+        for(ll j=0;j<m;j++){
+            pos[i][grid[i][j]]=j;
+        }
     }
+      for(ll i=0;i<n;i++){
+        bool row=0;
+        for(ll j=0;j<m;j++){
+            if(grid[i][j]!=j+1 && !row){
+                row=1;
+                ll no=grid[i][j];
+                swap(grid[i][j],grid[i][pos[i][j+1]]);
+                pos[i][no]=pos[i][j+1];
+                pos[i][grid[i][j]]=j;
+                op++;
+            }   
+        }
+      }
+    //   cout<<op<<nn;
+    //  for(ll i=0;i<n;i++){
+    //     for(ll j=0;j<m;j++){
+    //      cout<<grid[i][j];
+    //     }
+    //     cout<<nn;
+    //   }
+      bool ok=0;
+      for(ll i=0;i<n;i++){
+        for(ll j=0;j<m;j++){
+           if(grid[i][j]!=j+1) ok=1;
+        }
+      }
 
-
+      if(op<=n+1 && !ok) cout<<"YES"<<nn;
+      else cout<<"NO"<<nn;
+    }
     return 0;
 }
 

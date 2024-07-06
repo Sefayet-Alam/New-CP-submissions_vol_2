@@ -160,38 +160,36 @@ int main()
     //setIO();
      //ll tno=1;;
      t=1;
-    cin>>t;
+    //cin>>t;
 
     while(t--){
-        ll n,m;
-        cin>>n>>m;
-        vector<ll>a(n),b(m);
-        cin>>a>>b;
-
-         ll orr=0;
-        for(ll i=0;i<m;i++){
-            orr=b[i]|orr;
-        }
-        ll xr=a[0];
-        for(ll i=1;i<n;i++){
-           xr=(xr^a[i]);
-        }
-        ll maxm=xr;
+        ll n;
+        cin>>n;
+        vector<ll>vec(n);
+        cin>>vec;
+        map<ll,ll>ranges;
+        for(ll i=0;i<10;i++) ranges[i]=0;
         for(ll i=0;i<n;i++){
-            a[i]=(a[i]|orr);
+            if(vec[i]>=1 &&vec[i]<400) ranges[0]++;
+            else if(vec[i]>=400 &&vec[i]<800) ranges[1]++;
+            else if(vec[i]>=800 && vec[i]<1200) ranges[2]++;
+            else if(vec[i]>=1200 && vec[i]<1600) ranges[3]++;
+            else if(vec[i]>=1600 && vec[i]<2000) ranges[4]++;
+            else if(vec[i]>=2000 && vec[i]<2400) ranges[5]++;
+            else if(vec[i]>=2400 && vec[i]<2800) ranges[6]++;
+            else if(vec[i]>=2800 && vec[i]<3200) ranges[7]++;
+            else ranges[8]++;
         }
-        ll minm=a[0];
-         for(ll i=1;i<n;i++){
-           minm=(minm^a[i]);
+        // for(auto it:ranges){
+        //     cout<<it<<nn;
+        // }
+        ll minm=0;
+        for(ll i=0;i<8;i++){
+            if(ranges[i]>0) minm++;
         }
-      if(n%2==0){
+        ll maxm=minm+ranges[8];
+        minm=max(minm,1LL);
         cout<<minm<<" "<<maxm<<nn;
-      }
-      else{
-          cout<<maxm<<" "<<minm<<nn;
-      }
-
-
     }
 
 

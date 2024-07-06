@@ -57,7 +57,7 @@ using namespace __gnu_pbds;
 #define md                  10000007
 #define PI 3.1415926535897932384626
 const double EPS = 1e-9;
-const ll N = 2e5+10;
+const ll N = 3e5+10;
 const ll M = 1e9+7;
 
 
@@ -152,6 +152,34 @@ struct custom_hash {
         return splitmix64(x + FIXED_RANDOM);
     }
 };
+ll n,k;
+vector<ll>a(N),h(N);
+vector<pll>poss;
+ll atMostSum(ll i)
+{
+    ll l=poss[i].first,r=poss[i].first;
+    ll maxm=0;
+    ll curr=0;
+    ll sz=poss[i].second+1;
+    // cout<<pos<<nn;
+    while(r<sz){
+        if(curr+a[r]<=k){
+            curr+=a[r];
+            maxm=max(maxm,r-l+1);
+            r++;
+        }
+        else if(l==r){
+            curr+=a[r];
+            r++;
+        }
+        else{
+            curr-=a[l];
+            l++;
+        }  
+        // cout<<l<<" "<<r<<" "<<maxm<<nn;
+    }
+    return maxm;
+}
 
 int main()
 {
@@ -163,35 +191,46 @@ int main()
     cin>>t;
 
     while(t--){
-        ll n,m;
-        cin>>n>>m;
-        vector<ll>a(n),b(m);
-        cin>>a>>b;
+       
+        cin>>n>>k;
+       a.resize(n);
+       h.resize(n);
+        cin>>a>>h;
+        ll curr=0;
 
-         ll orr=0;
-        for(ll i=0;i<m;i++){
-            orr=b[i]|orr;
+        ll l=0;
+        ll st=n+1,en=-1;
+        vector<ll>vec[n+1000];
+        for(ll i=0;i<n-1;i++){
+            if((h[i]%h[i+1])==0){
+              curr++;
+              st=min(st,i);
+              en=max(en,i);
+            }
+            else{
+                if(curr){en=i;poss.push_back({st,en});st=n,en=-1;}
+                else if(a[i]<=k){st=i,en=i; poss.push_back({st,en});st=n,en=-1;}
+                else{
+                    st=n,en=-1;
+                }
+                curr=0;
+            }
         }
-        ll xr=a[0];
-        for(ll i=1;i<n;i++){
-           xr=(xr^a[i]);
+        if(curr){en=n-1;poss.push_back({st,en});st=n,en=-1;}
+        else if(a[n-1]<=k){st=n-1,en=n-1; poss.push_back({st,en});st=n,en=-1;}
+        else{
+             st=n,en=-1;
         }
-        ll maxm=xr;
-        for(ll i=0;i<n;i++){
-            a[i]=(a[i]|orr);
-        }
-        ll minm=a[0];
-         for(ll i=1;i<n;i++){
-           minm=(minm^a[i]);
-        }
-      if(n%2==0){
-        cout<<minm<<" "<<maxm<<nn;
-      }
-      else{
-          cout<<maxm<<" "<<minm<<nn;
-      }
 
-
+        ll ans=0;
+        
+        for(ll i=0;i<poss.size();i++){
+            ans=max(ans,atMostSum(i));
+        }
+        cout<<ans<<nn;
+        poss.clear();
+         
+        
     }
 
 

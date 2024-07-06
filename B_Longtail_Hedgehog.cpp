@@ -57,7 +57,7 @@ using namespace __gnu_pbds;
 #define md                  10000007
 #define PI 3.1415926535897932384626
 const double EPS = 1e-9;
-const ll N = 2e5+10;
+const ll N = 1 << 17;
 const ll M = 1e9+7;
 
 
@@ -153,6 +153,10 @@ struct custom_hash {
     }
 };
 
+
+
+vector<ll>g[N];
+ll dp[N];
 int main()
 {
     fast;
@@ -160,38 +164,29 @@ int main()
     //setIO();
      //ll tno=1;;
      t=1;
-    cin>>t;
+    //cin>>t;
 
     while(t--){
-        ll n,m;
-        cin>>n>>m;
-        vector<ll>a(n),b(m);
-        cin>>a>>b;
-
-         ll orr=0;
-        for(ll i=0;i<m;i++){
-            orr=b[i]|orr;
-        }
-        ll xr=a[0];
-        for(ll i=1;i<n;i++){
-           xr=(xr^a[i]);
-        }
-        ll maxm=xr;
-        for(ll i=0;i<n;i++){
-            a[i]=(a[i]|orr);
-        }
-        ll minm=a[0];
-         for(ll i=1;i<n;i++){
-           minm=(minm^a[i]);
-        }
-      if(n%2==0){
-        cout<<minm<<" "<<maxm<<nn;
+      ll n,m;
+      cin>>n>>m;
+      ll x,y;
+      for(ll i=0;i<m;i++){
+        cin>>x>>y;
+        g[x].push_back(y);
+        g[y].push_back(x);
       }
-      else{
-          cout<<maxm<<" "<<minm<<nn;
+      ll ans=-1LL;
+      mem(dp,0);
+      for(ll i=1;i<=n;i++){
+        dp[i]=1;
+        for(auto u:g[i]){
+            if(u<i){
+                dp[i]=max(dp[i],dp[u]+1);
+            }
+        }
+        ans=max(ans,dp[i]*(ll)g[i].size());
       }
-
-
+      cout<<ans<<nn;
     }
 
 

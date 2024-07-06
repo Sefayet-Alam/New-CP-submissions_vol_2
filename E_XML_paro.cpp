@@ -160,38 +160,28 @@ int main()
     //setIO();
      //ll tno=1;;
      t=1;
-    cin>>t;
+    //cin>>t;
 
     while(t--){
-        ll n,m;
-        cin>>n>>m;
-        vector<ll>a(n),b(m);
-        cin>>a>>b;
-
-         ll orr=0;
-        for(ll i=0;i<m;i++){
-            orr=b[i]|orr;
+      string s;
+      cin>>s;
+      ll n=s.size();
+      ll sp=0;
+      map<char,ll>mpp;
+      for(ll i=0;i<n;i++){
+        if(s[i]>='a' && s[i]<='z'){
+            if(s[i-1]=='/'){
+                sp--;
+                for(ll j=0;j<sp;j++) cout<<"  ";
+                cout<<"</"<<s[i]<<">"<<nn;
+            }
+            else{
+               for(ll j=0;j<sp;j++) cout<<"  ";
+               cout<<"<"<<s[i]<<">"<<nn;
+               sp++;
+            }
         }
-        ll xr=a[0];
-        for(ll i=1;i<n;i++){
-           xr=(xr^a[i]);
-        }
-        ll maxm=xr;
-        for(ll i=0;i<n;i++){
-            a[i]=(a[i]|orr);
-        }
-        ll minm=a[0];
-         for(ll i=1;i<n;i++){
-           minm=(minm^a[i]);
-        }
-      if(n%2==0){
-        cout<<minm<<" "<<maxm<<nn;
       }
-      else{
-          cout<<maxm<<" "<<minm<<nn;
-      }
-
-
     }
 
 

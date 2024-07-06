@@ -163,35 +163,17 @@ int main()
     cin>>t;
 
     while(t--){
-        ll n,m;
-        cin>>n>>m;
-        vector<ll>a(n),b(m);
-        cin>>a>>b;
-
-         ll orr=0;
-        for(ll i=0;i<m;i++){
-            orr=b[i]|orr;
-        }
-        ll xr=a[0];
-        for(ll i=1;i<n;i++){
-           xr=(xr^a[i]);
-        }
-        ll maxm=xr;
-        for(ll i=0;i<n;i++){
-            a[i]=(a[i]|orr);
-        }
-        ll minm=a[0];
-         for(ll i=1;i<n;i++){
-           minm=(minm^a[i]);
-        }
-      if(n%2==0){
-        cout<<minm<<" "<<maxm<<nn;
+      ll n,k,x;
+      cin>>n>>k>>x;
+      if(n<k){
+        cout<<"NO"<<nn;
+        continue;
       }
-      else{
-          cout<<maxm<<" "<<minm<<nn;
-      }
-
-
+      ll minm=(k*(k+1))/2;
+      ll low=n-k+1;
+      ll maxm=k*(n+n-k+1)/2;
+      if(x>=minm && x<=maxm) cout<<"YES"<<nn;
+      else cout<<"NO"<<nn;
     }
 
 

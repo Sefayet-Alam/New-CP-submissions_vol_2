@@ -153,6 +153,12 @@ struct custom_hash {
     }
 };
 
+ll n,m,dx,dy;
+vector<pll>vec;
+// map<pll,ll>mpp;
+// map<pll,ll>scr;
+map<pll,ll>mpp;
+
 int main()
 {
     fast;
@@ -160,38 +166,38 @@ int main()
     //setIO();
      //ll tno=1;;
      t=1;
-    cin>>t;
+    //cin>>t;
 
     while(t--){
-        ll n,m;
-        cin>>n>>m;
-        vector<ll>a(n),b(m);
-        cin>>a>>b;
-
-         ll orr=0;
-        for(ll i=0;i<m;i++){
-            orr=b[i]|orr;
-        }
-        ll xr=a[0];
+      cin>>n>>m>>dx>>dy;
+      ll x,y;
+      for(ll i=0;i<n;i++){
+        cin>>x>>y;
+        vec.push_back({x,y});
+        mpp[{x,y}]=1;
+      }
+      for(auto it:vec){
+        if(mpp[it]>1) continue;
+        mpp[it]++;
+        // cout<<it<<nn;
         for(ll i=1;i<n;i++){
-           xr=(xr^a[i]);
+            // cout<<(it.first+i*dx)%n<<" "<<(it.second+i*dy)%n<<nn;
+            if(mpp[{(it.first+i*dx)%n,(it.second+i*dy)%n}]){mpp[it]++;mpp[{(it.first+i*dx)%n,(it.second+i*dy)%n}]++;}
         }
-        ll maxm=xr;
-        for(ll i=0;i<n;i++){
-            a[i]=(a[i]|orr);
-        }
-        ll minm=a[0];
-         for(ll i=1;i<n;i++){
-           minm=(minm^a[i]);
-        }
-      if(n%2==0){
-        cout<<minm<<" "<<maxm<<nn;
-      }
-      else{
-          cout<<maxm<<" "<<minm<<nn;
       }
 
-
+      pll ans=vec[0];
+      ll maxm=-1;
+    //   cout<<maxm<<nn;
+      for(auto it:vec){
+        // cout<<it<<nn;
+        if(mpp[it]>maxm){
+            ans=it;
+            maxm=mpp[it];
+        }
+      }
+    //   cout<<maxm<<nn;
+      cout<<ans<<nn;
     }
 
 

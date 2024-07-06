@@ -57,7 +57,7 @@ using namespace __gnu_pbds;
 #define md                  10000007
 #define PI 3.1415926535897932384626
 const double EPS = 1e-9;
-const ll N = 2e5+10;
+const ll N = 2e5+100;
 const ll M = 1e9+7;
 
 
@@ -152,6 +152,17 @@ struct custom_hash {
         return splitmix64(x + FIXED_RANDOM);
     }
 };
+ll FM[N];
+ll is_initialized = 0;
+ll factorialMod(ll n, ll x){
+    if (!is_initialized){
+        FM[0] = 1 % x;
+        for (ll i = 1; i < N; i++)
+            FM[i] = (FM[i - 1] * i) % x;
+        is_initialized = 1;
+    }
+    return FM[n];
+}
 
 int main()
 {
@@ -163,35 +174,57 @@ int main()
     cin>>t;
 
     while(t--){
-        ll n,m;
-        cin>>n>>m;
-        vector<ll>a(n),b(m);
-        cin>>a>>b;
-
-         ll orr=0;
-        for(ll i=0;i<m;i++){
-            orr=b[i]|orr;
+        ll n,k;
+        cin>>n>>k;
+        vector<ll>vec(n);
+        cin>>vec;
+        ll odd=0,ev=0;
+        if(n==1){
+            cout<<0<<nn;
+            continue;
         }
-        ll xr=a[0];
-        for(ll i=1;i<n;i++){
-           xr=(xr^a[i]);
-        }
-        ll maxm=xr;
+        
+        ll ans,a1,a2,other;
         for(ll i=0;i<n;i++){
-            a[i]=(a[i]|orr);
+            if(vec[i]%2) odd++;
+            else ev++;
         }
-        ll minm=a[0];
-         for(ll i=1;i<n;i++){
-           minm=(minm^a[i]);
+        if(k==0){
+            if(odd==n || ev==n){
+                 ans=factorialMod(n,M);
+                cout<<ans<<nn;
+            }
+            else cout<<0<<nn;
         }
-      if(n%2==0){
-        cout<<minm<<" "<<maxm<<nn;
-      }
-      else{
-          cout<<maxm<<" "<<minm<<nn;
-      }
-
-
+        else{
+            if(n%2==0){
+            if(odd==n/2){
+                other=n-odd;
+                a1=factorialMod(odd,M);
+                a2=factorialMod(other,M);
+                ans=(2*a1*a2)%M;
+                cout<<ans<<nn;
+            }
+            else cout<<0<<nn;
+            }
+            else{
+            if(odd==n/2){
+                other=n-odd;
+                a1=factorialMod(odd,M);
+                a2=factorialMod(other,M);
+                ans=(a1*a2)%M;
+                cout<<ans<<nn;
+            }
+            else if(ev==n/2){
+                other=n-ev;
+                a1=factorialMod(ev,M);
+                a2=factorialMod(other,M);
+                ans=(a1*a2)%M;
+                cout<<ans<<nn;
+            }
+            else cout<<0<<nn;
+            }
+        }
     }
 
 

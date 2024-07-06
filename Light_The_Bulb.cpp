@@ -156,45 +156,66 @@ struct custom_hash {
 int main()
 {
     fast;
-     ll t;
+     ll tc;
     //setIO();
      //ll tno=1;;
-     t=1;
-    cin>>t;
+     tc=1;
+    cin>>tc;
 
-    while(t--){
-        ll n,m;
-        cin>>n>>m;
-        vector<ll>a(n),b(m);
-        cin>>a>>b;
-
-         ll orr=0;
-        for(ll i=0;i<m;i++){
-            orr=b[i]|orr;
-        }
-        ll xr=a[0];
-        for(ll i=1;i<n;i++){
-           xr=(xr^a[i]);
-        }
-        ll maxm=xr;
+    while(tc--){
+        ll n;
+        cin>>n;
+        string s,t;
+        cin>>s>>t;
+        vector<bool> diff(n,0);
         for(ll i=0;i<n;i++){
-            a[i]=(a[i]|orr);
+            if(s[i]!=t[i]) diff[i]=1;
+            else diff[i]=0;
         }
-        ll minm=a[0];
-         for(ll i=1;i<n;i++){
-           minm=(minm^a[i]);
+       
+        bool f=0;
+        ll firston=-1;
+        ll laston=-1;
+        for(ll i=0;i<n;i++){
+            if(diff[i]==1){
+                firston=i;
+                break;
+            }
         }
-      if(n%2==0){
-        cout<<minm<<" "<<maxm<<nn;
-      }
-      else{
-          cout<<maxm<<" "<<minm<<nn;
-      }
-
-
+        for(ll i=n-1;i>=0;i--){
+            if(diff[i]==1){
+                laston=i;
+                break;
+            }
+        }
+        ll change=0;
+        // deb(firston),deb(laston);
+        for(ll i=firston;i<laston;i++){
+            if(diff[i]!=diff[i+1]) change++;
+        }
+        // cout<<change<<nn;
+        if(firston==-1 && laston==-1){
+            //all 0s
+           cout<<(n*(n+1)/2)<<endl;
+        }
+        else if(change>2){
+            //0 sets more than one between two 1s
+            cout<<0<<nn;
+        }
+        else if(change==2){
+            cout<<6<<nn;
+        }
+        else if(change==0){
+            // all one
+            ll bef=firston;
+            ll af=n-1-laston;
+            ll ans=bef*2+af*2; //taking prefix and suffix zeros
+            ll toton=laston-firston+1;
+            ans+=(toton-1)*2;
+            cout<<ans<<nn;
+        }
     }
 
 
     return 0;
 }
-

@@ -163,38 +163,28 @@ int main()
     cin>>t;
 
     while(t--){
-        ll n,m;
-        cin>>n>>m;
-        vector<ll>a(n),b(m);
-        cin>>a>>b;
-
-         ll orr=0;
-        for(ll i=0;i<m;i++){
-            orr=b[i]|orr;
+      ll n,m,k;
+      cin>>n>>m>>k;
+      vector<ll>a(n),b(m);
+      cin>>a>>b;
+      sort(all(a));
+      sort(all(b));
+      for(ll i=1 ; i<=min({k,100+k%2}) ; i++){
+            if(i%2){
+                if(a[0]<b[m-1]) swap(a[0],b[m-1]);
+            }
+            else{
+                if(b[0]<a[n-1]) swap(b[0],a[n-1]);
+            }
+ 
+            sort(all(a));
+            sort(all(b));
         }
-        ll xr=a[0];
-        for(ll i=1;i<n;i++){
-           xr=(xr^a[i]);
-        }
-        ll maxm=xr;
-        for(ll i=0;i<n;i++){
-            a[i]=(a[i]|orr);
-        }
-        ll minm=a[0];
-         for(ll i=1;i<n;i++){
-           minm=(minm^a[i]);
-        }
-      if(n%2==0){
-        cout<<minm<<" "<<maxm<<nn;
-      }
-      else{
-          cout<<maxm<<" "<<minm<<nn;
-      }
-
-
+        ll sum=0;
+        for(ll i=0;i<n;i++) sum+=a[i];
+      cout<<sum<<nn;
     }
 
 
     return 0;
 }
-

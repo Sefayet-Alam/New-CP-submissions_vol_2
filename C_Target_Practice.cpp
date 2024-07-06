@@ -163,34 +163,45 @@ int main()
     cin>>t;
 
     while(t--){
-        ll n,m;
-        cin>>n>>m;
-        vector<ll>a(n),b(m);
-        cin>>a>>b;
-
-         ll orr=0;
-        for(ll i=0;i<m;i++){
-            orr=b[i]|orr;
+      char grid[10][10];
+      for(ll i=0;i<10;i++){
+        for(ll j=0;j<10;j++){
+            cin>>grid[i][j];
         }
-        ll xr=a[0];
-        for(ll i=1;i<n;i++){
-           xr=(xr^a[i]);
-        }
-        ll maxm=xr;
-        for(ll i=0;i<n;i++){
-            a[i]=(a[i]|orr);
-        }
-        ll minm=a[0];
-         for(ll i=1;i<n;i++){
-           minm=(minm^a[i]);
-        }
-      if(n%2==0){
-        cout<<minm<<" "<<maxm<<nn;
       }
-      else{
-          cout<<maxm<<" "<<minm<<nn;
-      }
+       ll cnt=0;
+      ll r=9;
+      ll l=0;
+      ll l1=1;
+      ll r1=8;
+      for(ll i=0;i<5;i++){
+       
+        for(ll j=l;j<=r;j++){
+            if(grid[l][j]=='X') {cnt+=i+1;}
+        }
+       
+        for(ll j=l;j<=r;j++){
+            if(grid[r][j]=='X') {cnt+=i+1;}
+        }
 
+        
+
+        for(ll j=l1;j<=r1;j++){
+
+            if(grid[j][l]=='X') {cnt+=i+1;}
+        }
+         for(ll j=l1;j<=r1;j++){
+            if(grid[j][r]=='X') {cnt+=i+1;}
+        }
+
+        l++;
+        r--;
+
+        l1++;
+        r1--;
+
+      }
+      cout<<cnt<<nn;
 
     }
 

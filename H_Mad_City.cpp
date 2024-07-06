@@ -153,6 +153,59 @@ struct custom_hash {
     }
 };
 
+
+
+vector<ll>g[N];
+bool vis[N];
+bool vis2[N];
+ll level[N];
+ll dist[N];
+vector<ll>cycle;
+
+
+void bfs(ll source){
+    queue<ll> q;
+    q.push(source);
+    vis[source]=1;
+    level[source]=0;
+    while(!q.empty()){
+        ll curr_v=q.front();
+        q.pop();
+        for(ll child: g[curr_v]){
+            if(!vis[child]){
+                q.push(child);
+                vis[child]=1;
+                level[child]=level[curr_v]+1;
+            }
+        }
+    }
+   
+}
+
+void dfs(ll vertex,ll par,ll d){
+    vis2[vertex]=1;
+    dist[vertex]=d;
+    for(ll child: g[vertex]){
+        if(child==par) continue;
+        else if(vis2[child]){
+            cycle.push_back(child);
+            continue;
+        }
+        dfs(child,vertex,d+1);
+     
+    }
+    
+}
+
+void reset(ll n){
+    for(ll i=0;i<=n+1;i++){
+        g[i].clear();
+        vis[i]=0;
+        vis2[i]=0;
+        level[i]=M;
+        dist[i]=M;
+    }
+}
 int main()
 {
     fast;
@@ -163,34 +216,30 @@ int main()
     cin>>t;
 
     while(t--){
-        ll n,m;
-        cin>>n>>m;
-        vector<ll>a(n),b(m);
-        cin>>a>>b;
-
-         ll orr=0;
-        for(ll i=0;i<m;i++){
-            orr=b[i]|orr;
-        }
-        ll xr=a[0];
-        for(ll i=1;i<n;i++){
-           xr=(xr^a[i]);
-        }
-        ll maxm=xr;
-        for(ll i=0;i<n;i++){
-            a[i]=(a[i]|orr);
-        }
-        ll minm=a[0];
-         for(ll i=1;i<n;i++){
-           minm=(minm^a[i]);
-        }
-      if(n%2==0){
-        cout<<minm<<" "<<maxm<<nn;
+        ll n,a,b;
+      cin>>n>>a>>b;
+      ll x,y;
+      reset(n);
+      for(ll i=0;i<n;i++){
+        cin>>x>>y;
+        g[x].push_back(y);
+        g[y].push_back(x);
       }
-      else{
-          cout<<maxm<<" "<<minm<<nn;
-      }
-
+     bfs(a);
+    
+     dfs(b,-1,0);
+    //   cout<<cycle<<nn;
+     bool f=0;
+     for(auto it:cycle){
+        if(level[it]>dist[it]){
+            cout<<"YES"<<nn;
+            f=1;
+            break;
+        }
+     }
+     if(!f) cout<<"NO"<<nn;
+    
+      cycle.clear();
 
     }
 

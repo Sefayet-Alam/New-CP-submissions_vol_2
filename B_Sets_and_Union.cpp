@@ -163,35 +163,36 @@ int main()
     cin>>t;
 
     while(t--){
-        ll n,m;
-        cin>>n>>m;
-        vector<ll>a(n),b(m);
-        cin>>a>>b;
-
-         ll orr=0;
-        for(ll i=0;i<m;i++){
-            orr=b[i]|orr;
-        }
-        ll xr=a[0];
-        for(ll i=1;i<n;i++){
-           xr=(xr^a[i]);
-        }
-        ll maxm=xr;
+        ll n;
+        cin>>n;
+        vector<vl>vec;
+        set<ll>maxm;
         for(ll i=0;i<n;i++){
-            a[i]=(a[i]|orr);
+            ll k;
+            cin>>k;
+            vector<ll>newn(k);
+           for(ll j=0;j<k;j++){
+            cin>>newn[j];
+            maxm.insert(newn[j]);            
+            }
+            vec.push_back(newn);
         }
-        ll minm=a[0];
-         for(ll i=1;i<n;i++){
-           minm=(minm^a[i]);
+       vector<ll>nos;
+       for(auto it:maxm){
+        nos.push_back(it);
+       }
+       ll ans=0;
+       for(auto it:nos){
+        ll k=it;
+        set<ll>curr;
+        for(ll i=0;i<vec.size();i++){
+            bool f=0;
+            for(auto itr:vec[i]){if(itr==k){f=1;break;}}
+            if(!f) for(auto itr:vec[i]){curr.insert(itr);}
         }
-      if(n%2==0){
-        cout<<minm<<" "<<maxm<<nn;
-      }
-      else{
-          cout<<maxm<<" "<<minm<<nn;
-      }
-
-
+        ans=max(ans,1LL*curr.size());
+       }
+       cout<<ans<<nn;
     }
 
 

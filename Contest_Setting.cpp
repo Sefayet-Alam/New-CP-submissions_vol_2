@@ -152,6 +152,28 @@ struct custom_hash {
         return splitmix64(x + FIXED_RANDOM);
     }
 };
+ll b,y;
+bool func(ll pos){
+   ll mn=pos/2;
+   ll mx=(pos+1)/2;
+   return (mn*y+mn*mn+mx*y+mx*mx)<=b;
+}
+ll bs(ll low,ll high){
+    ll mid;
+    ll ans=0;
+    while(low<=high){
+        mid=low+(high-low)/2;
+        //cout<<mid<<" "<<func(mid)<<endl;
+        if(func(mid)){
+            ans=mid;
+            low=mid+1;
+        }
+        else{
+            high=mid-1;
+        }
+    }
+    return ans;
+}
 
 int main()
 {
@@ -163,35 +185,11 @@ int main()
     cin>>t;
 
     while(t--){
-        ll n,m;
-        cin>>n>>m;
-        vector<ll>a(n),b(m);
-        cin>>a>>b;
-
-         ll orr=0;
-        for(ll i=0;i<m;i++){
-            orr=b[i]|orr;
-        }
-        ll xr=a[0];
-        for(ll i=1;i<n;i++){
-           xr=(xr^a[i]);
-        }
-        ll maxm=xr;
-        for(ll i=0;i<n;i++){
-            a[i]=(a[i]|orr);
-        }
-        ll minm=a[0];
-         for(ll i=1;i<n;i++){
-           minm=(minm^a[i]);
-        }
-      if(n%2==0){
-        cout<<minm<<" "<<maxm<<nn;
-      }
-      else{
-          cout<<maxm<<" "<<minm<<nn;
-      }
-
-
+      cin>>b>>y;
+      ll l=0,r=1e9+10;
+      ll ques=bs(l,r);
+      ll ans=(1LL<<ques);
+      cout<<ans<<nn;
     }
 
 

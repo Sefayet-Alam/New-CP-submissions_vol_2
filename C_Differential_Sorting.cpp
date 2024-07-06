@@ -163,34 +163,34 @@ int main()
     cin>>t;
 
     while(t--){
-        ll n,m;
-        cin>>n>>m;
-        vector<ll>a(n),b(m);
-        cin>>a>>b;
-
-         ll orr=0;
-        for(ll i=0;i<m;i++){
-            orr=b[i]|orr;
+        ll n;
+        cin>>n;
+        vector<ll>vec(n);
+        cin>>vec;
+        if(is_sorted(all(vec))){
+            cout<<0<<nn;
+            continue;
         }
-        ll xr=a[0];
-        for(ll i=1;i<n;i++){
-           xr=(xr^a[i]);
+       
+        if(vec[n-2]>vec[n-1]){
+            cout<<-1<<nn;
+            continue;
         }
-        ll maxm=xr;
-        for(ll i=0;i<n;i++){
-            a[i]=(a[i]|orr);
+        if(vec[n-2]<0 && vec[n-1]<0){
+            cout<<-1<<nn;
+            continue;
         }
-        ll minm=a[0];
-         for(ll i=1;i<n;i++){
-           minm=(minm^a[i]);
+        else{
+            ll number=vec[n-2]-vec[n-1];
+            vector<pair<ll,pll>>ans;
+            for(ll i=0;i<n-2;i++){
+                ans.push_back({i+1,{n-1,n}});
+            }
+            cout<<ans.size()<<nn;
+            for(auto it:ans){
+                cout<<it<<nn;
+            }
         }
-      if(n%2==0){
-        cout<<minm<<" "<<maxm<<nn;
-      }
-      else{
-          cout<<maxm<<" "<<minm<<nn;
-      }
-
 
     }
 

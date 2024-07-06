@@ -155,40 +155,62 @@ struct custom_hash {
 
 
 
+
 int main()
 {
-    // fast;
+    fast;
      ll t;
     //setIO();
      //ll tno=1;;
      t=1;
-    cin>>t;
+    //cin>>t;
 
     while(t--){
-      ll n,m;
-      cin>>n>>m;
-      vector<pll>vec;
-      ll a,b;
-      for(ll i=0;i<n;i++){
-        cin>>a>>b;
-        vec.push_back({a,b});
-      }
-     ll x,y,x1,y1,x2,y2,x3,y3;
-      for(ll i=0;i<m;i++){  
-        cin>>x>>y>>x2>>y2;
-       
-        ll cnt=0;
-        for(auto it:vec){
-            if((y2-y)*(x-it.first)==(x2-x)*(y-it.second)){
-                 x1=min(x,x2);
-                 x3=max(x,x2);
-                 y1=min(y,y2);
-                 y3=max(y,y2);
-                if(it.first>=x1 && it.first<=x3 && it.second>=y1 && it.second<=y3) cnt++;
+        string s;
+        vector<string>vec;
+        while(cin>>s){
+            vec.push_back(s);
+        }
+        // cout<<vec<<nn;
+        if(vec.size()>3){cout<<0<<nn;}
+        else{
+            vector<ll>nos;
+            bool f=0;
+            for(auto it:vec){
+                string curr=it;
+                for(ll j=0;j<curr.size();j++){
+                    if(curr[j]>='0' && curr[j]<='9'){}
+                    else f=1;
+                }
+                if(it.size()>10) f=1;
+                if(f) break;
+                else{
+                    ll x=stoll(curr);
+                    nos.push_back(x);
+                }
+            }
+            if(f || nos.size()!=3) cout<<0<<nn;
+            else{
+               
+                ll a=nos[0];
+                ll b=nos[1];
+                ll c=nos[2];
+                if(a>3 && a<=1e9 &&  b>0 && c>0){
+                     for(ll i=2;i*i<=b;i++){
+                        if(b%i==0) f=1;
+                     }
+                     for(ll i=2;i*i<=c;i++){
+                        if(c%i==0) f=1;
+                     }
+                     if(a%2 || a!=b+c) f=1;
+
+                     if(f) cout<<0<<nn;
+                     else cout<<1<<nn;
+                }
+                else cout<<0<<nn;
+
             }
         }
-        cout<<cnt<<nn;
-      }
     }
 
 

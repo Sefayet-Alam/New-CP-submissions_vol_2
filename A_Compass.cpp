@@ -163,35 +163,37 @@ int main()
     cin>>t;
 
     while(t--){
-        ll n,m;
-        cin>>n>>m;
-        vector<ll>a(n),b(m);
-        cin>>a>>b;
-
-         ll orr=0;
-        for(ll i=0;i<m;i++){
-            orr=b[i]|orr;
-        }
-        ll xr=a[0];
-        for(ll i=1;i<n;i++){
-           xr=(xr^a[i]);
-        }
-        ll maxm=xr;
-        for(ll i=0;i<n;i++){
-            a[i]=(a[i]|orr);
-        }
-        ll minm=a[0];
-         for(ll i=1;i<n;i++){
-           minm=(minm^a[i]);
-        }
-      if(n%2==0){
-        cout<<minm<<" "<<maxm<<nn;
+      ll n;
+      cin>>n;
+      vector<pll>vec;
+      ll x,y;
+      map<ll,ll>mpx;
+      map<ll,ll>mpy;
+      map<ll,ll>mpl;
+      map<ll,ll>mpr;
+      for(ll i=0;i<n;i++){
+        cin>>x>>y;
+        mpx[x]++;
+        mpy[y]++;
+        mpl[x-y]++;
+        mpr[x+y]++;
+        vec.push_back({x,y});
       }
-      else{
-          cout<<maxm<<" "<<minm<<nn;
+      ll ans=0;
+      for(auto it:mpx){
+        ans+=(it.second*(it.second-1))/2;
+      }
+      for(auto it:mpy){
+        ans+=(it.second*(it.second-1))/2;
+      }
+      for(auto it:mpl){
+        ans+=(it.second*(it.second-1))/2;
+      }
+      for(auto it:mpr){
+        ans+=(it.second*(it.second-1))/2;
       }
 
-
+      cout<<ans*2<<nn;
     }
 
 

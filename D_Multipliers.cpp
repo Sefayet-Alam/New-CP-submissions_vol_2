@@ -152,7 +152,40 @@ struct custom_hash {
         return splitmix64(x + FIXED_RANDOM);
     }
 };
+map<ll,ll>mpp;
 
+ll power(ll a,ll b,ll mod)
+{   ll res = 1;   
+    a=a%mod; 
+    if (a==0) return 0; 
+    while (b>0)
+    {
+        if (b&1) res=(res*a)%mod;
+        b /=2;
+        a=(a*a)%mod;
+    }
+    return res;
+}
+
+ll divisor_nos_prod(){
+     
+      ll noofdiv=1;
+      ll prod=1;
+    
+      ll a,b;
+      ll prev_noofdiv=1;
+      for(auto it:mpp){
+        a=it.first;
+        b=it.second;
+        //vec.push_back({a,b});
+      
+        noofdiv=(noofdiv*(b+1))%M;
+        prod = power(prod,b+1,M)*power(power(a, (b*(b+1)/2),M),prev_noofdiv,M)%M;
+        prev_noofdiv=prev_noofdiv* (b+1)%(M-1);
+      } 
+    
+      return prod;
+}
 int main()
 {
     fast;
@@ -160,37 +193,18 @@ int main()
     //setIO();
      //ll tno=1;;
      t=1;
-    cin>>t;
+    //cin>>t;
 
     while(t--){
-        ll n,m;
-        cin>>n>>m;
-        vector<ll>a(n),b(m);
-        cin>>a>>b;
-
-         ll orr=0;
-        for(ll i=0;i<m;i++){
-            orr=b[i]|orr;
-        }
-        ll xr=a[0];
-        for(ll i=1;i<n;i++){
-           xr=(xr^a[i]);
-        }
-        ll maxm=xr;
-        for(ll i=0;i<n;i++){
-            a[i]=(a[i]|orr);
-        }
-        ll minm=a[0];
-         for(ll i=1;i<n;i++){
-           minm=(minm^a[i]);
-        }
-      if(n%2==0){
-        cout<<minm<<" "<<maxm<<nn;
+      ll n;
+      cin>>n;
+      ll x;
+      for(ll i=0;i<n;i++){
+        cin>>x;
+        mpp[x]++;
       }
-      else{
-          cout<<maxm<<" "<<minm<<nn;
-      }
-
+      ll ans=divisor_nos_prod();
+      cout<<ans<<nn;
 
     }
 

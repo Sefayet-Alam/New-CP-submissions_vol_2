@@ -152,7 +152,19 @@ struct custom_hash {
         return splitmix64(x + FIXED_RANDOM);
     }
 };
+ll dp[N];
+map<ll,ll>freq;
 
+ll func(ll currmex){
+    if(currmex==0) return dp[currmex]=0;
+    if(dp[currmex]!=-1) return dp[currmex];
+    ll ret=LLONG_MAX;
+    
+    for(ll i=currmex-1;i>=0;i--){
+        ret=min(ret,currmex*(freq[i]-1)+i+func(i));
+    }
+    return dp[currmex]=ret;
+}
 int main()
 {
     fast;
@@ -163,35 +175,35 @@ int main()
     cin>>t;
 
     while(t--){
-        ll n,m;
-        cin>>n>>m;
-        vector<ll>a(n),b(m);
-        cin>>a>>b;
-
-         ll orr=0;
-        for(ll i=0;i<m;i++){
-            orr=b[i]|orr;
-        }
-        ll xr=a[0];
-        for(ll i=1;i<n;i++){
-           xr=(xr^a[i]);
-        }
-        ll maxm=xr;
-        for(ll i=0;i<n;i++){
-            a[i]=(a[i]|orr);
-        }
-        ll minm=a[0];
-         for(ll i=1;i<n;i++){
-           minm=(minm^a[i]);
-        }
-      if(n%2==0){
-        cout<<minm<<" "<<maxm<<nn;
+      ll n;
+      cin>>n;
+      vector<ll>vec(n);
+      cin>>vec;
+    set<ll>stt;  
+      for(ll i=0;i<n;i++){
+        freq[vec[i]]++;
+        stt.insert(vec[i]);
       }
-      else{
-          cout<<maxm<<" "<<minm<<nn;
-      }
-
-
+    vector<ll>newn;
+    for(auto it:stt){
+        newn.push_back(it);
+    }
+    ll sz=newn.size();
+    ll mex=sz;
+    // cout<<newn<<nn<<sz<<nn;
+    for(ll i=0;i<sz;i++){
+        if(newn[i]!=i){
+            mex=i;
+            break;
+        }
+    }
+    // cout<<mex<<nn;
+    for(ll i=0;i<=sz+10;i++) dp[i]=-1;
+    ll ans=func(mex);
+    // for(ll i=0;i<=sz;i++) cout<<dp[i]<<" ";
+    // cout<<nn;
+    cout<<ans<<nn;
+    freq.clear();
     }
 
 

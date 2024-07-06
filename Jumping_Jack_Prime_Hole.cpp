@@ -57,7 +57,7 @@ using namespace __gnu_pbds;
 #define md                  10000007
 #define PI 3.1415926535897932384626
 const double EPS = 1e-9;
-const ll N = 2e5+10;
+const ll N = 5e3+10;
 const ll M = 1e9+7;
 
 
@@ -153,6 +153,48 @@ struct custom_hash {
     }
 };
 
+
+
+
+ll n,m;
+
+
+vector<bool> Primes(N,1);
+vector<ll>primenos;
+void SieveOfEratosthenes(ll n)
+{
+    Primes[1]=0;
+    for (ll i=2;i*i<=n;i++) {
+    if(Primes[i]==1){     
+    for(ll j=i*i;j<=n;j+=i)
+        Primes[j]=0;
+        }
+    }
+    for(ll i=1;i<n;i++){
+        if(Primes[i]){
+            primenos.push_back(i);
+        }
+    }
+}
+
+
+
+ll dp[N][N];
+vl coins;
+ll sz;
+ll func(ll i,ll tot){
+    if(i==sz) return 1;
+
+    ll ways=0;
+    if(dp[i][tot]!=-1) return dp[i][tot];
+    for(ll j=0;j<coins.size();j++){
+        if(tot>=coins[j])  ways=(ways+func(i,tot-coins[j]-1))%M;
+        //  if(tot>=coins[j]) ways=(ways+func(i+1,tot-coins[j]-1))%M;
+        ways=(ways+func(i+1,tot))%M;
+    }
+    return dp[i][tot]=ways;
+}
+
 int main()
 {
     fast;
@@ -161,37 +203,26 @@ int main()
      //ll tno=1;;
      t=1;
     cin>>t;
-
+    SieveOfEratosthenes(N);
     while(t--){
-        ll n,m;
         cin>>n>>m;
-        vector<ll>a(n),b(m);
-        cin>>a>>b;
-
-         ll orr=0;
-        for(ll i=0;i<m;i++){
-            orr=b[i]|orr;
+        for(auto it:primenos){
+            if(it<=m){
+                coins.push_back(it);
+            }
+            else break;
         }
-        ll xr=a[0];
-        for(ll i=1;i<n;i++){
-           xr=(xr^a[i]);
+        // cout<<coins<<nn;
+        sz=coins.size();
+        for(ll i=0;i<=sz;i++){
+            for(ll j=0;j<=n;j++){
+                dp[i][j]=-1;
+            }
         }
-        ll maxm=xr;
-        for(ll i=0;i<n;i++){
-            a[i]=(a[i]|orr);
-        }
-        ll minm=a[0];
-         for(ll i=1;i<n;i++){
-           minm=(minm^a[i]);
-        }
-      if(n%2==0){
-        cout<<minm<<" "<<maxm<<nn;
-      }
-      else{
-          cout<<maxm<<" "<<minm<<nn;
-      }
-
-
+        ll k=n;
+       ll ans=func(0,k);
+       cout<<ans<<nn;
+       coins.clear();
     }
 
 

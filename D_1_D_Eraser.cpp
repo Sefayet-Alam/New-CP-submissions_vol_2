@@ -163,35 +163,32 @@ int main()
     cin>>t;
 
     while(t--){
-        ll n,m;
-        cin>>n>>m;
-        vector<ll>a(n),b(m);
-        cin>>a>>b;
-
-         ll orr=0;
-        for(ll i=0;i<m;i++){
-            orr=b[i]|orr;
+      ll n,k;
+      cin>>n>>k;
+      string s;
+      cin>>s;
+      ll curr=0;
+      ll ans=0;
+      for(ll i=0;i<n;i++){
+        if(s[i]=='B' && curr<k){
+            curr++;
         }
-        ll xr=a[0];
-        for(ll i=1;i<n;i++){
-           xr=(xr^a[i]);
+        else if(s[i]=='B' && curr>=k){
+            curr=1;
+            ans++;
         }
-        ll maxm=xr;
-        for(ll i=0;i<n;i++){
-            a[i]=(a[i]|orr);
+        else{
+           if(curr){
+            if(curr<k) curr++;
+            else{
+                curr=0;
+                ans++;
+            }
+           }
         }
-        ll minm=a[0];
-         for(ll i=1;i<n;i++){
-           minm=(minm^a[i]);
-        }
-      if(n%2==0){
-        cout<<minm<<" "<<maxm<<nn;
       }
-      else{
-          cout<<maxm<<" "<<minm<<nn;
-      }
-
-
+      if(curr) ans++;
+      cout<<ans<<nn;
     }
 
 

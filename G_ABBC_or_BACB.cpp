@@ -163,34 +163,41 @@ int main()
     cin>>t;
 
     while(t--){
-        ll n,m;
-        cin>>n>>m;
-        vector<ll>a(n),b(m);
-        cin>>a>>b;
+        string s;
+        cin>>s;
+        ll n=s.size();
 
-         ll orr=0;
-        for(ll i=0;i<m;i++){
-            orr=b[i]|orr;
-        }
-        ll xr=a[0];
-        for(ll i=1;i<n;i++){
-           xr=(xr^a[i]);
-        }
-        ll maxm=xr;
+        ll cnt=0;
+       vector<ll>lens;
         for(ll i=0;i<n;i++){
-            a[i]=(a[i]|orr);
+            if(s[i]=='A'){cnt++;}
+            else{
+                if(cnt>0) lens.push_back(cnt);
+                cnt=0;
+            }
         }
-        ll minm=a[0];
-         for(ll i=1;i<n;i++){
-           minm=(minm^a[i]);
-        }
-      if(n%2==0){
-        cout<<minm<<" "<<maxm<<nn;
-      }
-      else{
-          cout<<maxm<<" "<<minm<<nn;
-      }
+        if(cnt>0) lens.push_back(cnt);
 
+        sort(all(lens));
+        // cout<<lens<<nn;
+        if(lens.size()==0){
+            cout<<0<<nn;
+            continue;
+        }
+
+        bool f=(s[0] == 'B' || s[n - 1] == 'B');
+        for(ll i=0;i<n-1;i++){
+            if(s[i]==s[i+1] && s[i]=='B') f=1;
+        }
+
+        ll ans=0;
+
+        if(f) ans+=lens[0];
+
+        for(ll i=1;i<lens.size();i++){
+            ans+=lens[i];
+        }
+        cout<<ans<<nn;
 
     }
 
