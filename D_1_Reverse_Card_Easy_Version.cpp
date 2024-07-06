@@ -160,10 +160,16 @@ int main()
     //setIO();
      //ll tno=1;;
      t=1;
-    //cin>>t;
+    cin>>t;
 
     while(t--){
-      cout<<"HELOO"<<nn;
+        ll n,m;
+        cin>>n>>m;
+        ll ans=n;
+        for(ll i=2;i<=m;i++){
+            ans+=(n+i)/(i*i);
+        }
+        cout<<ans<<nn;
     }
 
 

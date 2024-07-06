@@ -163,7 +163,11 @@ int main()
     //cin>>t;
 
     while(t--){
-      cout<<"HELOO"<<nn;
+      ll n;
+      cin>>n;
+      vector<ll>vec(n);
+      cin>>vec;
+      cout<<""
     }
 
 
